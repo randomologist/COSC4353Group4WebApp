@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/randomologist/COSC4353Group4WebApp/issues"
   },
-  "homepage": "https://github.com/randomologist/COSC4353Group4WebApp#readme"
+  "homepage": "https://github.com/randomologist/COSC4353Group4WebApp#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
