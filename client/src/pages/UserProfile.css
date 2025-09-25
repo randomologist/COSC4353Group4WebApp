@@ -1,0 +1,47 @@
+/* to center form */ 
+.form {
+  width: 80%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d3d2d2;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+/* form itself */
+form {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 500px;
+}
+
+h1 {
+  text-align: center;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #555;
+}
+
+/*nput fields */
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+textarea {
+  height: 80px;
+}
