@@ -14,7 +14,7 @@ function NotifDropdown() {
     }, [notifs]);
 
     if (loading) return <div className = "ndropdown">Loading...</div>;
-    if (error) return <div className = "ndropdown">Error loading notifications style = "color:red"</div>;
+    if (error) return <div className = "ndropdown" style = "color:red">Error loading notifications</div>;
 
     return(
         <div className="ndropdown">
