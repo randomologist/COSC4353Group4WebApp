@@ -1,5 +1,4 @@
 import {useState,useEffect, useRef} from "react";
-import './NotifToggle.css';
 import NotifDropdown from "./NotifDropdown";
 
 function NotifToggle() {
