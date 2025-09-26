@@ -1,18 +1,20 @@
 /*profile css*/
 /* to center form */ 
-.form {
+.formWrapper {
   width: 80%;
-  height: 100%;
+  max-width: 960px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   background-color: #d3d2d2;
   margin: 0 auto;
-  padding: 50px;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
 /* form itself */
 form {
+  display:inline-block;
   background-color: white;
   padding: 30px;
   border-radius: 10px;

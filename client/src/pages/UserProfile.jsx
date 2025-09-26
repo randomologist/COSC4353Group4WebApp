@@ -60,7 +60,7 @@ function ProfilePage() {
   };
 
   return (
-    <div className="form"> {/* center said form in screen*/}
+    <div className="formWrapper"> {/* center said form in screen*/}
       <form onSubmit={handleSubmit}>
         <h1>User Profile</h1>
         

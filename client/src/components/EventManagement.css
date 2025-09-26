@@ -1,5 +1,5 @@
 /*Event Management css*/
-.form {
+.formWrapper {
   width: 80%;
   max-width: 960px;
   display: flex;
@@ -10,6 +10,7 @@
   padding: 2rem;
   box-sizing: border-box;
 }
+
 
 form {
   background-color: white;

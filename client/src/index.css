@@ -2,7 +2,6 @@
 
 html, body{
   height:100%;
-  overflow-x: hidden;
 }
 #root {
   display: flex;
@@ -11,13 +10,13 @@ html, body{
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
   box-sizing: border-box;
 }
 #content {
   width:100%;
-  margin-top: var(--nav-height);
+  height: calc(100% - var(--nav-height));
+  margin-top: calc(var(--nav-height));
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
@@ -52,8 +51,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 100vw;
-  min-height: 100vh;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 h1 {

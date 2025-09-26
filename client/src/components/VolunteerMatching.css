@@ -1,13 +1,4 @@
 /*Volunteer Matching css*/
-.form {
-  width: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #d3d2d2;
-  margin: 0 auto;
-  padding: 50px;
-}
 
 .container {
   background-color: white;

@@ -61,7 +61,7 @@ function EventManagement() {
   };
 
   return (
-    <div className="form">
+    <div className="formWrapper">
       <form onSubmit={handleSubmit}>
         <h2>Event Management</h2>
         {/* Event Name */}
