@@ -19,7 +19,9 @@ function NavBar() {
         <NavLink to="/VolunteerMatching" className={({ isActive }) => (isActive ? 'active' : '')}>
           Volunteer Matching
         </NavLink>
-        <NotifToggle/>
+      </div>
+      <div className="navbar-right">
+        <NotifToggle />
       </div>
     </nav>
   )
