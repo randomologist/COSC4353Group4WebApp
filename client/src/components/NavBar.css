@@ -1,10 +1,16 @@
 .nav {
+  position:fixed;
   display: flex;
+  top:0;
+  left:0;
+  width:100%;
+  height: var(--nav-height);
   align-items: center;
   justify-content: space-between;
   padding: 12px 18px;
   background: #1a1a1a;
   color: white;
+  box-sizing: border-box;
 }
 .nav-brand {
   font-weight: 700;

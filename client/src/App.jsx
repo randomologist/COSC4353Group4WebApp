@@ -9,13 +9,15 @@ function App(){
   return (
     <BrowserRouter>
       <NavBar />
-      <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/UserProfilePage" element={<UserProfile />} />
-        <Route path="/EventManagement" element={<EventManagement />} />
-        <Route path="/VolunteerMatching" element={<VolunteerMatching />} />
-      </Routes>
+      <div id="content">
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/UserProfilePage" element={<UserProfile />} />
+          <Route path="/EventManagement" element={<EventManagement />} />
+          <Route path="/VolunteerMatching" element={<VolunteerMatching />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   )
 }
