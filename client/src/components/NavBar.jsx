@@ -11,6 +11,12 @@ function NavBar() {
         <NavLink to="/UserProfilePage" className={({ isActive }) => (isActive ? 'active' : '')}>
           Profile
         </NavLink>
+        <NavLink to="/EventManagement" className={({ isActive }) => (isActive ? 'active' : '')}>
+          Event Management
+        </NavLink>
+        <NavLink to="/VolunteerMatching" className={({ isActive }) => (isActive ? 'active' : '')}>
+          Volunteer Matching
+        </NavLink>
       </div>
     </nav>
   )

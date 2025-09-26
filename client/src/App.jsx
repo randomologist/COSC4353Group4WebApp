@@ -13,18 +13,11 @@ function App(){
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/UserProfilePage" element={<UserProfile />} />
+        <Route path="/EventManagement" element={<EventManagement />} />
+        <Route path="/VolunteerMatching" element={<VolunteerMatching />} />
       </Routes>
     </BrowserRouter>
   )
-
-  /*return (
-    <div>
-      <EventManagement />
-      <hr />
-      <VolunteerMatching />
-    </div>
-  );*/
-
 }
 
 export default App
