@@ -1,0 +1,60 @@
+/*Event Management css*/
+.form {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d3d2d2;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+form {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 500px;
+}
+
+h2 {
+  text-align: center;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #555;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+textarea {
+  height: 80px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
