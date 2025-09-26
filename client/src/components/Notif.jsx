@@ -11,3 +11,5 @@ function Notif({notif, onRead}) {
         </div>
     )
 }
+
+export default Notif;
