@@ -8,22 +8,43 @@ export async function fetchNotifs(page = 1, limit = 5){
         {//matched event notification
             id:1,
             eventID:1,
-            message: "You have been matched with Event A.",
-            details: "Event A will be happening on 11/26/2025 at 10:00 AM.",
+            message: "Event A has been updated.",
+            details: "Event A will now be happening on 11/27/2025 at 10:00 AM.",
             read: false
         },
         {//event update notification
             id:2,
             eventID:1,
-            message: "Event A has been updated.",
-            details: "Event A will now be happening on 11/27/2025 at 11:00 AM.",
-            read: false
+            message: "You have been matched with Event A.",
+            details: "Event A will now happening on 11/26/2025 at 11:00 AM.",
+            read: true
         },
         {
             id:3,
             eventID:2,
             message: "Reminder: Event B is tomorrow at 10 AM.",
             details: "Don't forget to bring your ID and water bottle.",
+            read:false
+        },
+        {
+            id:4,
+            eventID:2,
+            message: "You have been matched with Event B.",
+            details: "Event B will be happening on 9/08/2025 at 10:00 AM.",
+            read:true
+        },
+        {
+            id:5,
+            eventID:2,
+            message: "Event C has been canceled",
+            details: "We apologize for any inconvenience.",
+            read:true
+        },
+        {
+            id:6,
+            eventID:2,
+            message: "You have been matched with Event C.",
+            details: "Event C will be happening on 8/01/2025 at 10:00 AM.",
             read:true
         },
     ];

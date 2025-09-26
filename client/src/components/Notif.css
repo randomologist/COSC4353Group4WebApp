@@ -1,0 +1,12 @@
+.notif{
+    border-bottom:1px solid grey;
+    border-right:1px solid grey;
+    border-left:1px solid grey;
+    padding:10px;
+}
+.notif.unread{
+    background-color:white;
+}
+.notif.read{
+    background-color:lightgrey;
+}
