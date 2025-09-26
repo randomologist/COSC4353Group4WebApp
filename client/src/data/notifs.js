@@ -56,7 +56,7 @@ export function useNotifs(){
             setLoading(true);
             try{
                 const {items,hasMore} = await fetchNotifs(page);
-                setNotifs(data);
+                setNotifs(items);
             } catch (err) {
                 setError(err);
             } finally {
