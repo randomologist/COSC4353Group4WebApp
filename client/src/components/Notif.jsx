@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import {useNotifs} from "../data/notifs";
 import "./Notif.css";
 
-function Notif({notif, onRead}) {
+function Notif({notif, onRead,compact}) {
     return(
-        <div className={'notif ${notif.read ? "read" : "unread"} ${compact ? "compact" : "full"}'} onClick={() => onRead(notif.id)}>
+        //onclick should trigger when ntoif is clicked or when link is clicked
+        <div className={`notif ${notif.read ? "read" : "unread"} ${compact ? "compact" : "full"}`} onClick={() => onRead(notif.id)}>
             <h4>{notif.message}</h4>
             <p>{notif.details}</p>
             <a href={`/events/${notif.eventID}`}>View Event</a>

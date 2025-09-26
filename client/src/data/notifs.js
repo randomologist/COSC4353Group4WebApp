@@ -1,9 +1,10 @@
-import { useState,useEffect } from "react";
+import { useState,useEffect, use } from "react";
 
-//to be used for fetching stored notifications
-export async function fetchNotifs() {
+//to be used for fetching stored notifications 
+//will need to add pagination when we have a working backend
+export async function fetchNotifs(page = 1, limit = 5){
     //placeholder notifications
-    return [
+    const data = [
         {//matched event notification
             id:1,
             eventID:1,
@@ -26,21 +27,33 @@ export async function fetchNotifs() {
             read:true
         },
     ];
+
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    const items = data.slice(start, end);
+    const hasMore = end < data.length;
+
+    return { items, hasMore };
 }
 
 //custom hook for notifications
-export function useNotifs() {
+export function useNotifs(){
     //state for notifications display
     const [notifs, setNotifs] = useState([]);
+    //state for current page
+    const [page, setPage] = useState(1);
+    //state for checking if more notifs are available
+    const [hasMore, setHasMore] = useState(true);
     //state for loading
     const [loading, setLoading] = useState(true);
     //state for error handling
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        async function loadNotifs() {
-            try {
-                const data = await fetchNotifs();
+        async function loadNotifs(){
+            setLoading(true);
+            try{
+                const {items,hasMore} = await fetchNotifs(page);
                 setNotifs(data);
             } catch (err) {
                 setError(err);
@@ -49,7 +62,20 @@ export function useNotifs() {
             }
         }
         loadNotifs();
-    }, []);
-    return { notifs, loading, error };
+    }, [page]);
+
+    useEffect(() => {
+        const onScroll = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && hasMore && !loading){
+                setPage(prev => prev + 1);
+            }
+        });
+
+        if(loaderRef.current){
+            observer.observe(loaderRef.current);
+        }
+        return () =>  observer.disconnect();
+    },[hasMore, loading]);
+    return { notifs, loading, error, loaderRef};
 
 }
