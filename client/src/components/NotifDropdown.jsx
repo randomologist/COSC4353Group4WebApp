@@ -1,11 +1,38 @@
 import {useNotifs} from "../data/notifs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import './NotifDropdown.css';
+import Notif from "./Notif";
 
 function NotifDropdown() {
     const { notifs, loading, error } = useNotifs();
-    const [isOpen, setIsOpen] = useState(false);
-    const toggleDropdown = () => setIsOpen(!isOpen);
+    const [localNotifs, setLocalNotifs] = useState(notifs);
 
-    if (loading) return <div>Loading...</div>;
-    //incomplete
+    useEffect(() => {
+        if(notifs){
+            setLocalNotifs(notifs);
+        }
+    }, [notifs]);
+
+    if (loading) return <div className = "dropdown">Loading...</div>;
+    if (error) return <div className = "dropdown">Error loading notifications</div>;
+
+    return(
+        <div className="dropdown">
+            {localNotifs.slice(0,5).map((notif) => (
+            <Notif 
+                key={notif.id}
+                notif={notif}
+                onRead={(id) => {
+                    setLocalNotifs((prev) =>
+                        prev.map((n) =>
+                            n.id === id ? { ...n, read: true } : n
+                        )
+                    );
+                }}
+            />
+            ))}
+        </div>
+    );    
 }
+
+export default NotifDropdown;
