@@ -76,6 +76,6 @@ export function useNotifs(){
         }
         return () =>  observer.disconnect();
     },[hasMore, loading]);
-    return { notifs, loading, error, loaderRef};
+    return { notifs, loading, error};
 
 }
