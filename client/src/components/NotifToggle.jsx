@@ -1,6 +1,5 @@
 import {useState,useEffect, useRef} from "react";
 import NotifDropdown from "./NotifDropdown";
-import './NotifToggle.css';
 function NotifToggle() {
     const [isOpen, setIsOpen] = useState(false);
     const toggleRef = useRef(null);
