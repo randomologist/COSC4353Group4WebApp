@@ -23,7 +23,7 @@ function NotifToggle() {
     return (
         <div ref={toggleRef} style ={{ position: "relative", display: "inline-block"}}>
             <button className="notif-button" onClick={toggleDropdown}>
-                {isOpen ? ">" : "v"} //replace with icons later
+                {isOpen ? "v" : ">"}
             </button>
             {isOpen && <NotifDropdown />}
         </div>
