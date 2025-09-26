@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import './NavBar.css'
+import Notif from './Notif'
+import NotifToggle from './NotifToggle'
 
 function NavBar() {
   return (
@@ -17,6 +19,9 @@ function NavBar() {
         <NavLink to="/VolunteerMatching" className={({ isActive }) => (isActive ? 'active' : '')}>
           Volunteer Matching
         </NavLink>
+      </div>
+      <div className="navbar-right">
+        <NotifToggle />
       </div>
     </nav>
   )

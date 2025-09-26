@@ -25,3 +25,7 @@
 .nav-links a.active {
   background: rgba(255,255,255,0.12);
 }
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
