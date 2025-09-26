@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import UserProfile from "./pages/UserProfile";
 import Home from './pages/Home'
 import NavBar from './components/NavBar'
+import EventManagement from './components/EventManagement'
+import VolunteerMatching from './components/VolunteerMatching'
 
 function App(){
   return (
@@ -14,6 +16,14 @@ function App(){
       </Routes>
     </BrowserRouter>
   )
+
+  /*return (
+    <div>
+      <EventManagement />
+      <hr />
+      <VolunteerMatching />
+    </div>
+  );*/
 
 }
 
