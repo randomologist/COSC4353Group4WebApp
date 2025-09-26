@@ -187,8 +187,8 @@ function ProfilePage() {
           Zip Code:
           <input
             type="text"
-            name="zip"
-            value={userData.zip}
+            name="zipCode"
+            value={userData.zipCode}
             maxLength={9}
             minLength={5}
             onChange={handleChange}
