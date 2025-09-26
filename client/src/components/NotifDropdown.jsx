@@ -13,11 +13,11 @@ function NotifDropdown() {
         }
     }, [notifs]);
 
-    if (loading) return <div className = "dropdown">Loading...</div>;
-    if (error) return <div className = "dropdown">Error loading notifications</div>;
+    if (loading) return <div className = "ndropdown">Loading...</div>;
+    if (error) return <div className = "ndropdown">Error loading notifications</div>;
 
     return(
-        <div className="dropdown">
+        <div className="ndropdown">
             {localNotifs.slice(0,5).map((notif) => (
             <Notif 
                 key={notif.id}
