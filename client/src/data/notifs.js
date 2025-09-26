@@ -1,4 +1,4 @@
-import { useState,useEffect, use } from "react";
+import { useState,useEffect, useRef } from "react";
 
 //to be used for fetching stored notifications 
 //will need to add pagination when we have a working backend
