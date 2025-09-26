@@ -21,9 +21,9 @@ function NotifToggle() {
     }, []);
 
     return (
-        <div ref={toggleRef} style ={{ position: "relative", display: "inline-block"}}>
+        <div ref={toggleRef} style ={{ position: "relative", left:"20px", display: "inline-block"}}>
             <button className="notif-button" onClick={toggleDropdown}>
-                {isOpen ? "v" : ">"}
+                {isOpen ? "Hide Notifications" : "Show Notifications"}
             </button>
             {isOpen && <NotifDropdown />}
         </div>
