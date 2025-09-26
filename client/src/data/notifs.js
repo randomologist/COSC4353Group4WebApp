@@ -48,6 +48,8 @@ export function useNotifs(){
     const [loading, setLoading] = useState(true);
     //state for error handling
     const [error, setError] = useState(null);
+    //ref for the loader div
+    const loaderRef = useRef(null);
 
     useEffect(() => {
         async function loadNotifs(){
@@ -65,7 +67,7 @@ export function useNotifs(){
     }, [page]);
 
     useEffect(() => {
-        const onScroll = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting && hasMore && !loading){
                 setPage(prev => prev + 1);
             }
@@ -76,6 +78,6 @@ export function useNotifs(){
         }
         return () =>  observer.disconnect();
     },[hasMore, loading]);
-    return { notifs, loading, error};
+    return { notifs, loading, error, loaderRef};
 
 }
