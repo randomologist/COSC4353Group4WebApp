@@ -19,6 +19,9 @@ function NavBar() {
         <NavLink to="/VolunteerMatching" className={({ isActive }) => (isActive ? 'active' : '')}>
           Volunteer Matching
         </NavLink>
+        <NavLink to="/VolunteerHistory" className={({ isActive }) => (isActive ? 'active' : '')}>
+          Volunteer History
+        </NavLink>
         <NavLink to="/auth" className={({ isActive }) => (isActive ? 'active' : '')}>
           Sign in
         </NavLink>
