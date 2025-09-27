@@ -9,3 +9,9 @@
   padding: 2rem;
   box-sizing: border-box;
 }
+#forgot-pass {
+  font-size: x-small;
+}
+.section {
+  padding: 5px;
+}
