@@ -17,7 +17,6 @@ function App(){
           <Route path="/UserProfilePage" element={<UserProfile />} />
           <Route path="/EventManagement" element={<EventManagement />} />
           <Route path="/VolunteerMatching" element={<VolunteerMatching />} />
-          <Route path="/VolunteerHistory" element={<VolunteerHistory />} />
           <Route path="/auth" element={<AuthPage />} />
         </Routes>
       </div>
