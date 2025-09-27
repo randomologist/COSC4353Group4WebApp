@@ -1,0 +1,11 @@
+#formWrapper {
+  width: 50%;
+  max-width: 960px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  background-color: #d3d2d2;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+}
