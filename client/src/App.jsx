@@ -5,6 +5,7 @@ import NavBar from './components/NavBar'
 import EventManagement from './components/EventManagement'
 import VolunteerMatching from './components/VolunteerMatching'
 import AuthPage from './pages/AuthPage';
+import VolunteerHistory from './pages/VolunteerHistory';
 
 function App(){
   return (
@@ -17,6 +18,7 @@ function App(){
           <Route path="/UserProfilePage" element={<UserProfile />} />
           <Route path="/EventManagement" element={<EventManagement />} />
           <Route path="/VolunteerMatching" element={<VolunteerMatching />} />
+          <Route path="/VolunteerHistory" element={<VolunteerHistory />} />
           <Route path="/auth" element={<AuthPage />} />
         </Routes>
       </div>
