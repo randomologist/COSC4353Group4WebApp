@@ -114,4 +114,4 @@ function VolunteerHistory() {
   );
 }
 
-export default VolunteerMatching;
+export default VolunteerHistory;
