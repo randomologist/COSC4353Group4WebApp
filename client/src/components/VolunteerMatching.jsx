@@ -1,62 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./VolunteerMatching.css"
 
 function VolunteerMatching() {
-  // Placeholder volunteers and events (simulating back end for now)
-  const volunteers = [
-    { id: 1, name: "Kelly Johnson", skills: ["First Aid / CPR", "Teaching / Tutoring"] },
-    { id: 2, name: "Bob Smith", skills: ["Cooking / Food Preparation", "Driving / Transportation"] },
-    { id: 3, name: "John Doe", skills: ["Cleaning / Sanitation", "First Aid / CPR"] },
-    { id: 4, name: "Dylan Lee", skills: ["Fundraising", "Public Speaking"] }
-  ];
-
-  const events = [
-    {
-      id: 101,
-      name: "Community Health Fair",
-      requiredSkills: ["First Aid / CPR"],
-    },
-    {
-      id: 102,
-      name: "Soup Kitchen",
-      requiredSkills: ["Cooking / Food Preparation"],
-    },
-    {
-      id: 103,
-      name: "Neighborhood Clean-Up",
-      requiredSkills: ["Cleaning / Sanitation"],
-    },
-  ];
-
-  // Using these to not show the "No match found" before clicking "Find Matches"
+  const [volunteers, setVolunteers] = useState([]);
+  const [events, setEvents] = useState([]);
   const [selectedVolunteer, setSelectedVolunteer] = useState("");
   const [matchedEvents, setMatchedEvents] = useState([]);
   const [hasMatched, setHasMatched] = useState(false);
 
-  const handleMatch = () => {
-    // Pressing "Find Matches" before selecting
+  // loading volunteers and events 
+  useEffect(() => {
+    fetch("http://localhost:5000/api/matching/volunteers")
+      .then(res => res.json())
+      .then(data => setVolunteers(data))
+      .catch(err => console.error("Error loading volunteers:", err));
+
+    fetch("http://localhost:5000/api/events")
+      .then(res => res.json())
+      .then(data => setEvents(data))
+      .catch(err => console.error("Error loading events:", err));
+  }, []);
+
+  const handleMatch = async () => {
     if (!selectedVolunteer) {
       alert("Please select a volunteer first.");
       return;
     }
-    setHasMatched(true);
 
-    const volunteer = volunteers.find((v) => v.id === parseInt(selectedVolunteer));
-    if (!volunteer) return;
+    try {
+      const res = await fetch(`http://localhost:5000/api/matching/matches/${selectedVolunteer}`);
+      const matches = await res.json();
+      setMatchedEvents(matches);
+      setHasMatched(true);
+    } catch (error) {
+      console.error("Error fetching matches:", error);
+    }
+  };
 
-    // Match based on at least one matching skill
-    const matches = events.filter((event) =>
-      event.requiredSkills.some((skill) => volunteer.skills.includes(skill))
-    );
+  const handleAssign = async (eventId) => {
+    try {
+      const res = await fetch("http://localhost:5000/api/matching/assign", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          volunteerId: parseInt(selectedVolunteer),
+          eventId: eventId
+        })
+      });
 
-    setMatchedEvents(matches);
+      if (res.ok) {
+        alert("Volunteer assigned to event!");
+      } else {
+        const error = await res.json();
+        alert("Error: " + error.message);
+      }
+    } catch (error) {
+      console.error("Error assigning volunteer:", error);
+    }
   };
 
   return (
     <div className="volunteer-matching">
       <h2>Volunteer Matching</h2>
 
-      {/* Select Volunteer */}
       <div>
         <label>Select Volunteer</label><br />
         <select
@@ -75,21 +81,20 @@ function VolunteerMatching() {
       <br />
       <button onClick={handleMatch}>Find Matches</button>
 
-      {/* Results */}
       {matchedEvents.length > 0 && (
         <div style={{ marginTop: "20px" }}>
           <h3>Matched Events:</h3>
           <ul>
             {matchedEvents.map((event) => (
               <li key={event.id} style={{color: 'black'}}>
-                <strong>{event.name}</strong> (Requires: {event.requiredSkills.join(", ")})
+                <strong>{event.title}</strong> (Requires: {event.skillsRequired.join(", ")})
+                <button onClick={() => handleAssign(event.id)}>Assign</button>
               </li>
             ))}
           </ul>
         </div>
       )}
 
-      {/* If no match found */}
       {hasMatched && matchedEvents.length === 0 && (
         <p style={{ marginTop: "20px", color: "red" }}>
           No matching events found for this volunteer.

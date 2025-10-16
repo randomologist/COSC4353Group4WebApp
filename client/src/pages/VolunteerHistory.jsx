@@ -97,7 +97,7 @@ function VolunteerHistory() {
             {volunteerHist.map((event) => (
               <li key={event.id} style={{color: 'black'}}>
                 <strong>{event.name}</strong> - {event.date}
-                 <a href={`/events/${notif.eventID}`}>View Event</a>
+                 <a href={`/events/${event.id}`}> View Event</a>
               </li>
             ))}
           </ul>
@@ -105,7 +105,7 @@ function VolunteerHistory() {
       )}
 
       {/* If no history exists */}
-      {hasHist && matchedEvents.length === 0 && (
+      {hasHist && volunteerHist.length === 0 && (
         <p style={{ marginTop: "20px", color: "red" }}>
           No matching events found for this volunteer.
         </p>

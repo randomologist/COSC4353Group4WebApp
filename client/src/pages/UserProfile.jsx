@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./UserProfile.css"; 
 
 function ProfilePage() {
@@ -14,6 +14,25 @@ function ProfilePage() {
     availability: []
   });
 
+  // loads the user profile
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/userProfile/1");
+        if (response.ok) {
+          const data = await response.json();
+          setUserData(data);
+        } else {
+          console.error("Failed to load profile");
+        }
+      } catch (error) {
+        console.error("Error loading profile:", error);
+      }
+    };
+    
+    loadProfile();
+  }, []);
+
   /* updates current form values */
   /* had to look this up */
   const handleChange = (e) => {
@@ -26,10 +45,32 @@ function ProfilePage() {
 
   /* prevents page refresh etc. */
   /* had to look this up */
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", userData);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  try {
+    const response = await fetch("http://localhost:5000/api/userProfile/1", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userData)
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log("Profile updated successfully:", result);
+      alert("Profile saved!");
+    } else {
+      const error = await response.json();
+      console.error("Error updating profile:", error);
+      alert("Error saving profile: " + error.message);
+    }
+  } catch (error) {
+    console.error("Request failed:", error);
+    alert("Failed to save profile");
+  }
+};
 
   // handle date changes 
   const handleDateChange = (index, value) => {
