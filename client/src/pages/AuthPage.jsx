@@ -11,6 +11,11 @@ function AuthPage(){
         const handleHashChange = () => {
             const hash = window.location.hash.replace('#', '');
             setMode(hash === "sign-up" ? "sign-up" : "login");
+            setFormData({
+                email: '',
+                password: '',
+                confirmPassword: ''
+            });
         }
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
@@ -18,6 +23,7 @@ function AuthPage(){
     const [formData, setFormData] = useState({
         email: '',
         password: '',
+        confirmPassword: ''
     });
 
     function handleChange(e){
@@ -50,8 +56,18 @@ function AuthPage(){
                     onChange={handleChange}
                     />
                     {mode === "login" && ( <a id="forgot-pass">Forgot Password</a>)}
-                    </div>
-                <button>{mode === "sign-up" ? "Sign Up" : "Log In"}</button>
+                </div>
+                {mode === "sign-up" && (
+                <div class="section">
+                    <span class="authLabel">Confirm Password</span>
+                    <input
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="confirm password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}/>
+                </div>)}
+                <button >{mode === "sign-up" ? "Sign Up" : "Log In"}</button>
                 <a href={mode === "sign-up" ? "#login" : "#sign-up"}>{mode === "sign-up" ? "Already have an account? Log In" : "Don't have an account? Sign Up"}</a>
             </div>
         </div>
