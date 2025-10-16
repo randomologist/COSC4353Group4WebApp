@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './AuthPage.css'
 
 function AuthPage(){
@@ -26,16 +27,65 @@ function AuthPage(){
         confirmPassword: ''
     });
 
+    const navigate = useNavigate();
+    const [error, setError] = useState('');
+    const [submitting, setSubmitting] = useState(false);
+
     function handleChange(e){
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value}));
     }
 
+    async function handleSubmit(e){
+        e.preventDefault();
+        setError('');
+        setSubmitting(true);
+
+        // basic client validation
+        if (!formData.email || !formData.password) {
+            setError('Email and password are required.');
+            setSubmitting(false);
+            return;
+        }
+        if (mode === 'sign-up' && formData.password !== formData.confirmPassword) {
+            setError('Passwords do not match.');
+            setSubmitting(false);
+            return;
+        }
+
+        const endpoint = mode === 'sign-up' ? '/api/auth/register' : '/api/auth/login';
+        const payload = { email: formData.email, password: formData.password };
+
+        try {
+            const res = await fetch(`http://localhost:5000${endpoint}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                setError(data?.error || 'Authentication failed');
+                setSubmitting(false);
+                return;
+            }
+
+            // success: store token & user, then go home
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            navigate('/home');
+        } catch {
+            setError('Network error. Is the server running on :5000?');
+        } finally {
+            setSubmitting(false);
+        }
+    }
 
     return (
         <div id="formWrapper">
             <div id="formBody">
                 <h2>{mode === "sign-up" ? "Sign Up" : "Log In"}</h2>
+                {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
                 <div class="section">
                     <span class="authLabel">Email</span>
                     <input

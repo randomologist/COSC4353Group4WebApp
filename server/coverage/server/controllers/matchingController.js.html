@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">97.87% </span>
+                <span class="strong">97.91% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>92/94</span>
+                <span class='fraction'>94/96</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">97.87% </span>
+                <span class="strong">97.91% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>92/94</span>
+                <span class='fraction'>94/96</span>
             </div>
         
             
@@ -156,12 +156,14 @@
 <a name='L91'></a><a href='#L91'>91</a>
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -172,9 +174,9 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -198,10 +200,10 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
@@ -242,18 +244,20 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const { getEvents } = require("../data/eventData.js");
 const { getUserProfiles } = require("../controllers/userProfileController.js");
 const { getAssignments, addAssignment } = require("../data/matchingData.js");
 &nbsp;
-// Get all volunteers
+// get volunteers
 exports.getAllVolunteers = (req, res) =&gt; {
   const profiles = getUserProfiles();
   const volunteers = profiles.map(p =&gt; ({
@@ -271,7 +275,7 @@ exports.getMatchedEvents = (req, res) =&gt; {
   const { volunteerId } = req.params;
 &nbsp;
   if (!volunteerId) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >    return res.status(400).json({ message: "Volunteer ID is required" });</span>
+<span class="cstat-no" title="statement not covered" >    return res.status(400).json({ message: "Volunteer ID required" });</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
   const profiles = getUserProfiles();
@@ -283,7 +287,7 @@ exports.getMatchedEvents = (req, res) =&gt; {
 &nbsp;
   const events = getEvents();
 &nbsp;
-  // Match events where volunteer has at least one required skill AND is available on event date
+  // logiv to match event based on skill and then availability
   const matchedEvents = events.filter(event =&gt; {
     const hasSkill = event.skillsRequired.some(skill =&gt; volunteer.skills.includes(skill));
     const isAvailable = volunteer.availability.includes(event.date);
@@ -298,7 +302,7 @@ exports.assignVolunteerToEvent = (req, res) =&gt; {
   const { volunteerId, eventId } = req.body;
 &nbsp;
   if (!volunteerId || !eventId) {
-    return res.status(400).json({ message: "Volunteer ID and Event ID are required" });
+    return res.status(400).json({ message: "Volunteer ID and Event ID required" });
   }
 &nbsp;
   const profiles = getUserProfiles();
@@ -325,6 +329,7 @@ exports.assignVolunteerToEvent = (req, res) =&gt; {
     return res.status(400).json({ message: "Volunteer already assigned to this event" });
   }
 &nbsp;
+  // Create assignment
   const assignment = {
     id: assignments.length + 1,
     volunteerId: parseInt(volunteerId),
@@ -334,11 +339,12 @@ exports.assignVolunteerToEvent = (req, res) =&gt; {
     status: "Assigned"
   };
 &nbsp;
+  // Save assignment
   addAssignment(assignment);
   res.status(201).json(assignment);
 };
 &nbsp;
-// Get all assignments
+// get assignments
 exports.getVolunteerAssignments = (req, res) =&gt; {
   const assignments = getAssignments();
   res.json(assignments);
@@ -349,7 +355,7 @@ exports.getVolunteerAssignments = (req, res) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-13T21:49:22.558Z
+                at 2025-10-16T22:12:43.116Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -9,10 +9,12 @@ app.use(express.json());
 const userProfileRoutes = require("./routes/userProfile");
 const eventRoutes = require("./routes/events");
 const matchingRoutes = require("./routes/matching");
+const authRoutes = require("./routes/auth");
 
 app.use("/api/userProfile", userProfileRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/matching", matchingRoutes);
+app.use("/api/auth", authRoutes);
 
 if (process.env.NODE_ENV === "test") { // for test node_env auto == test
   module.exports = app;
