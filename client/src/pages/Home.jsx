@@ -4,7 +4,7 @@ function Home(){
     return (
         <div>
             <h1>Volunteer Site</h1>
-            <div>A site to register for/set up a volunteer event</div>
+            <div className="colored-text">A site to register for/set up a volunteer event</div>
         </div>
     )
 }
