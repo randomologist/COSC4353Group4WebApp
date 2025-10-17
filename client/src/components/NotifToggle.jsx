@@ -4,10 +4,11 @@ function NotifToggle() {
     const [isOpen, setIsOpen] = useState(false);
     const toggleRef = useRef(null);
 
-    const toggleDropdown = () => {
+    const toggleDropdown = () => { //intialize as hidden/unopened
         setIsOpen(!isOpen);
     };
 
+    //if something else is clicked hide dropdown
     useEffect(() => {
         const unfocus = (event) => {
             if (toggleRef.current && !toggleRef.current.contains(event.target)) {
@@ -20,7 +21,7 @@ function NotifToggle() {
         };
     }, []);
 
-    return (
+    return ( //actual toggling of dropdown
         <div ref={toggleRef} style ={{ position: "relative", display: "inline-block"}}>
             <button className="notif-button" onClick={toggleDropdown}>
                 {isOpen ? "Hide Notifications" : "Show Notifications"}
