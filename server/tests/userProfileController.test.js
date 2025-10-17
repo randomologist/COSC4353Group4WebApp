@@ -2,6 +2,7 @@ import request from "supertest";
 import app from "../server";
 import { describe, it, expect, beforeEach } from "vitest";
 import { resetUserProfiles } from "../controllers/userProfileController";
+import * as userCtrl from '../controllers/userProfileController';
 
 describe("User Profile Controller", () => {
   beforeEach(() => {
@@ -227,5 +228,35 @@ describe("User Profile Controller", () => {
         availability: ["2025-12-01"]
       });
     expect(res.status).toBe(404);
+  });
+
+  function mockRes() {
+    return {
+      status: vi.fn().mockReturnThis(),
+      json: vi.fn(),
+    };
+  }
+
+  // added tests for missing userId
+  it('getUserProfile returns 400 when userId param is missing', () => {
+    const req = { params: {} };
+    const res = mockRes();
+    userCtrl.getUserProfile(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ message: 'User ID is required' });
+  });
+
+  it('updateUserProfile returns 400 when userId param is missing', () => {
+    const req = { params: {}, body: {} };
+    const res = mockRes();
+    userCtrl.updateUserProfile(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ message: 'User ID is required' });
+  });
+
+  it('getUserProfiles helper returns the array of profiles', () => {
+    const profiles = userCtrl.getUserProfiles();
+    expect(Array.isArray(profiles)).toBe(true);
+    expect(profiles.length).toBeGreaterThan(0);
   });
 });

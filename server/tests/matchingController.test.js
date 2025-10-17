@@ -4,6 +4,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { resetAssignments } from "../data/matchingData.js";
 import { resetUserProfiles } from "../controllers/userProfileController.js";
 import { resetEvents } from "../data/eventData.js";
+import * as matchingData from "../data/matchingData.js";
 
 describe("Volunteer Matching Controller", () => {
   beforeEach(() => {
@@ -169,5 +170,34 @@ describe("Volunteer Matching Controller", () => {
     const res = await request(app).get("/api/matching/assignments");
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  // testing the functions
+  it("matchingData.resetAssignments([]) clears list", () => {
+    matchingData.resetAssignments([{ id: 1 }, { id: 2 }]);
+    let list = matchingData.getAssignments();
+    expect(list.length).toBe(2);
+
+    matchingData.resetAssignments([]);
+    list = matchingData.getAssignments();
+    expect(Array.isArray(list)).toBe(true);
+    expect(list.length).toBe(0);
+  });
+
+  it("matchingData.addAssignment() appends an assignment and getAssignments() returns it", () => {
+    matchingData.resetAssignments([]);
+    const a = { id: 101, volunteerId: 1, eventId: 1, status: "Assigned" };
+    matchingData.addAssignment(a);
+    const list = matchingData.getAssignments();
+    expect(list.length).toBe(1);
+    expect(list[0]).toMatchObject(a);
+  });
+
+  it("matchingData.addAssignment() supports multiple adds", () => {
+    matchingData.resetAssignments([]);
+    matchingData.addAssignment({ id: 1 });
+    matchingData.addAssignment({ id: 2 });
+    const list = matchingData.getAssignments();
+    expect(list.map(x => x.id)).toEqual([1, 2]);
   });
 });

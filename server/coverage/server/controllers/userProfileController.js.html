@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.51% </span>
+                <span class="strong">68.91% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>47/74</span>
+                <span class='fraction'>51/74</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.11% </span>
+                <span class="strong">89.74% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>32/34</span>
+                <span class='fraction'>35/39</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/10</span>
+                <span class='fraction'>8/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.51% </span>
+                <span class="strong">68.91% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>47/74</span>
+                <span class='fraction'>51/74</span>
             </div>
         
             
@@ -182,8 +182,8 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">11x</span>
@@ -193,8 +193,8 @@
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -255,10 +255,10 @@ const validateProfile = <span class="fstat-no" title="function not covered" >(pr
 };
 &nbsp;
 // Get user profile by ID
-exports.getUserProfile = <span class="fstat-no" title="function not covered" >(req, res) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  const { userId } = req.params;</span>
-<span class="cstat-no" title="statement not covered" >  if (!userId) return res.status(400).json({ message: "User ID is required" });</span>
-<span class="cstat-no" title="statement not covered" ></span>
+exports.getUserProfile = (req, res) =&gt; {
+  const { userId } = req.params;
+  if (!userId) return res.status(400).json({ message: "User ID is required" });
+<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" >  const profile = userProfiles.find(p =&gt; p.id === parseInt(userId));</span>
   if (!profile) return res.<span class="branch-0 cbranch-no" title="branch not covered" >status(404).json({ message: "User profile not found" });</span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -266,10 +266,10 @@ exports.getUserProfile = <span class="fstat-no" title="function not covered" >(r
 };
 &nbsp;
 // Update user profile
-exports.updateUserProfile = <span class="fstat-no" title="function not covered" >(req, res) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  const { userId } = req.params;</span>
-<span class="cstat-no" title="statement not covered" >  if (!userId) return res.status(400).json({ message: "User ID is required" });</span>
-<span class="cstat-no" title="statement not covered" ></span>
+exports.updateUserProfile = (req, res) =&gt; {
+  const { userId } = req.params;
+  if (!userId) return res.status(400).json({ message: "User ID is required" });
+<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" >  const profileIndex = userProfiles.findIndex(p =&gt; p.id === parseInt(userId));</span>
 <span class="cstat-no" title="statement not covered" >  if (profileIndex === -1) return res.status(404).json({ message: "User profile not found" });</span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -283,7 +283,7 @@ exports.updateUserProfile = <span class="fstat-no" title="function not covered" 
 <span class="cstat-no" title="statement not covered" >};</span>
 &nbsp;
 // Helpers for testing
-exports.getUserProfiles = <span class="fstat-no" title="function not covered" >() =&gt; userProfiles;</span>
+exports.getUserProfiles = () =&gt; userProfiles;
 exports.resetUserProfiles = (data) =&gt; { userProfiles = data; };
 &nbsp;</pre></td></tr></table></pre>
 
@@ -292,7 +292,7 @@ exports.resetUserProfiles = (data) =&gt; { userProfiles = data; };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-16T22:12:43.116Z
+                at 2025-10-17T22:09:35.558Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
