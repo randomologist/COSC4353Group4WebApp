@@ -42,4 +42,7 @@ let data = [
             read:true
         },
     ];
+exports.getNotifs = () => data;
+exports.resetNotifs = (newdata) => { data = newdata; };
+exports.addNotifs = (notif) => data.push(notif);
 module.exports = data;

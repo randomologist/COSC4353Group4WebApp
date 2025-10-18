@@ -3,6 +3,9 @@ import data from "../data/notifData.js"
 export function getNotifs(req,res){
     const {cursor, limit = 5} = req.query;
     const index = cursor? data.findIndex(n => n.id === parseInt(cursor)) : -1;
+    if(cursor && index === -1){
+         return res.json({ items: [], hasMore: false, next: null });
+    }
     const start = index >=0? index + 1: 0;
     const items = data.slice(start, start+parseInt(limit));
     const hasMore = start+items.length < data.length;
