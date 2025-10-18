@@ -1,11 +1,12 @@
-import {useNotifs} from "../data/notifs";
-import { useEffect, useState } from "react";
+import {useNotifs} from "../hooks/notifs";
+import { useEffect, useState, useRef } from "react";
 import './NotifDropdown.css';
 import Notif from "./Notif";
 
 function NotifDropdown() {
-    const { notifs, loading, error } = useNotifs();
+    const { notifs, loading, error, loaderRef } = useNotifs();
     const [localNotifs, setLocalNotifs] = useState(notifs);
+    const scrollContainer = useRef(null)
 
     useEffect(() => {//if there are notifications, show them
         if(notifs){
@@ -20,22 +21,24 @@ function NotifDropdown() {
 
     return(
         //dropdown element display
-        <div className="ndropdown">
-            //
-            {localNotifs.slice(0,5).map((notif) => (
-            //individual notification
-            <Notif 
-                key={notif.id}
-                notif={notif}
-                onRead={(id) => {
-                    setLocalNotifs((prev) =>
-                        prev.map((n) =>
-                            n.id === id ? { ...n, read: true } : n
-                        )
-                    );
-                }}
-            />
-            ))}
+        <div className="ndropdown-wrapper">
+            <div className = "ndropdown-scroll" ref ={scrollContainer}>
+                {localNotifs.map((notif) => (
+                    //individual notification
+                    <Notif 
+                        key={notif.id}
+                        notif={notif}
+                        onRead={(id) => {
+                            setLocalNotifs((prev) =>
+                                prev.map((n) =>
+                                    n.id === id ? { ...n, read: true } : n
+                                )
+                            );
+                        }}
+                    />
+                ))}
+                <div ref = {loaderRef} style={{height:"1px"}}></div>
+            </div>
         </div>
     );    
 }

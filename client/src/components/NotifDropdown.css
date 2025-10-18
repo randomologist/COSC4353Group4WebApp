@@ -5,6 +5,17 @@
     color:black;
     width:500px;
     max-height: 300px;
+    text-align: left;
+    line-height:1;
+    border:1px solid grey;
+    }
+.ndropdown-wrapper{
+    position: absolute;
+    top:100%;
+    right:0;
+    color:black;
+    width:500px;
+    max-height: 300px;
     overflow-y: auto;
     text-align: left;
     line-height:1;
