@@ -117,7 +117,7 @@ function AuthPage(){
                     value={formData.confirmPassword}
                     onChange={handleChange}/>
                 </div>)}
-                <button >{mode === "sign-up" ? "Sign Up" : "Log In"}</button>
+                <button onClick={handleSubmit}>{mode === "sign-up" ? "Sign Up" : "Log In"}</button>
                 <a href={mode === "sign-up" ? "#login" : "#sign-up"}>{mode === "sign-up" ? "Already have an account? Log In" : "Don't have an account? Sign Up"}</a>
             </div>
         </div>
