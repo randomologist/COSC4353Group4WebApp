@@ -10,11 +10,13 @@ const userProfileRoutes = require("./routes/userProfile");
 const eventRoutes = require("./routes/events");
 const matchingRoutes = require("./routes/matching");
 const authRoutes = require("./routes/auth");
+const notifRoutes = require("./routes/notifs")
 
 app.use("/api/userProfile", userProfileRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/matching", matchingRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/notifs",notifRoutes);
 
 if (process.env.NODE_ENV === "test") { // for test node_env auto == test
   module.exports = app;
