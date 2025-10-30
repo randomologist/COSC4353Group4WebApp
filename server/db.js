@@ -16,8 +16,8 @@ db.serialize(() => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       email TEXT UNIQUE NOT NULL,
       password TEXT NOT NULL
-    )
-  `);
+    )`
+  );
 
   db.run(`
     CREATE TABLE IF NOT EXISTS UserProfile (
@@ -33,8 +33,7 @@ db.serialize(() => {
       availability TEXT NOT NULL,
       userId INTEGER,
       FOREIGN KEY(userId) REFERENCES UserCredentials(id)
-    )
-  `);
+    )`);
 
   db.run(`
     CREATE TABLE IF NOT EXISTS EventDetails (
@@ -45,8 +44,7 @@ db.serialize(() => {
       requiredSkills TEXT NOT NULL,
       urgency TEXT NOT NULL,
       eventDate TEXT NOT NULL
-    )
-  `);
+    )`);
 
   db.run(`
     CREATE TABLE IF NOT EXISTS VolunteerHistory (
@@ -56,8 +54,7 @@ db.serialize(() => {
       status TEXT NOT NULL,
       FOREIGN KEY(userId) REFERENCES UserCredentials(id),
       FOREIGN KEY(eventId) REFERENCES EventDetails(id)
-    )
-  `);
+    )`);
 });
 
 module.exports = db;
