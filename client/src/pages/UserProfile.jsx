@@ -36,7 +36,6 @@ function ProfilePage() {
 }, []);
 
   // updates current form values
-  /* had to look this up */
   const handleChange = (e) =>{
     const { name, value } = e.target;
     setUserData((prev) => ({
@@ -45,14 +44,19 @@ function ProfilePage() {
     }));
   };
 
-  //prevents page refresh
-  /* had to look this up */
+  //prevents page refresh // needed help with this
   const handleSubmit = async (e) => {
   e.preventDefault();
   
   try {
-    const response = await fetch("http://localhost:5000/api/userProfile/1", {
-      method: "PUT",
+    const url = profileId 
+      ? `http://localhost:5000/api/userProfile/${profileId}` 
+      : "http://localhost:5000/api/userProfile";
+    
+    const method = profileId ? "PUT" : "POST";
+    
+    const response = await fetch(url, {
+      method: method,
       headers: {
         "Content-Type": "application/json"
       },
@@ -61,12 +65,13 @@ function ProfilePage() {
 
     if (response.ok) {
       const result = await response.json();
-      console.log("Profile updated successfully:", result);
+      if (!profileId && result.id) {
+        setProfileId(result.id);
+      }
       alert("Profile saved!");
     } else {
       const error = await response.json();
-      console.error("Error updating profile:", error);
-      alert("Error saving profile: " + error.message);
+      alert("Error: " + error.message);
     }
   } catch (error) {
     console.error("Request failed:", error);

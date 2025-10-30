@@ -64,7 +64,8 @@ app.post("/api/events", (req, res) => {
 app.post("/api/profile", (req, res) => {
   const {
     fullName,
-    address,
+    address1,
+    address2,
     city,
     state,
     zipcode,
@@ -73,7 +74,7 @@ app.post("/api/profile", (req, res) => {
     availability
   } = req.body;
 
-  if (!fullName || !address || !city || !state || !zipcode) {
+  if (!fullName || !address1 || !city || !state || !zipcode) {
     return res.status(400).json({ error: "All address fields are required." });
   }
 

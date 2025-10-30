@@ -27,7 +27,7 @@ db.serialize(() => {
       address2 TEXT,
       city TEXT NOT NULL,
       state TEXT NOT NULL,
-      zip TEXT NOT NULL,
+      zipCode TEXT NOT NULL,
       skills TEXT NOT NULL,
       preferences TEXT,
       availability TEXT NOT NULL,

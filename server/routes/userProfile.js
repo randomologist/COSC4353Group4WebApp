@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getUserProfile, updateUserProfile } = require("../controllers/userProfileController");
+const { getUserProfile, updateUserProfile, createUserProfile } = require("../controllers/userProfileController");
 
 router.post("/", createUserProfile); // create new user profile
 router.get("/:userId", getUserProfile); // look up by id
