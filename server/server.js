@@ -77,22 +77,23 @@ app.post("/api/profile", (req, res) => {
     return res.status(400).json({ error: "All address fields are required." });
   }
 
-  if (!/^\d{5}$/.test(zipcode)) {
+  if (!/^\d{5}$/.test(zipcode)) { // zipcode must be 5 digits had help with regex 
     return res.status(400).json({ error: "Zip code must be 5 digits." });
   }
 
   db.run(
-    `INSERT INTO UserProfile (fullName, address, city, state, zipcode, skills, preferences, availability)
+    `INSERT INTO UserProfile (fullName, address1, address2, city, state, zipcode, skills, preferences, availability)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       fullName,
-      address,
+      address1,
+      address2,
       city,
       state,
       zipcode,
-      JSON.stringify(skills || []),
+      JSON.stringify(skills || []), // convert to string
       preferences || "",
-      JSON.stringify(availability || [])
+      JSON.stringify(availability || []) // same
     ],
     function (err) {
       if (err) {

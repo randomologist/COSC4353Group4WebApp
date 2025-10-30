@@ -13,29 +13,31 @@ function ProfilePage() {
     preferences: "",
     availability: []
   });
-
+  
+  const [profileId, setProfileId] = useState(null);
   // loads the user profile
   useEffect(() => {
     const loadProfile = async () => {
-      try {
+      try{
         const response = await fetch("http://localhost:5000/api/userProfile/1");
-        if (response.ok) {
+        if (response.ok){
           const data = await response.json();
           setUserData(data);
+          setProfileId(1);
         } else {
-          console.error("Failed to load profile");
+          console.log("No profile found, will create new one");
         }
       } catch (error) {
         console.error("Error loading profile:", error);
       }
     };
-    
-    loadProfile();
-  }, []);
+  
+  loadProfile();
+}, []);
 
-  /* updates current form values */
+  // updates current form values
   /* had to look this up */
-  const handleChange = (e) => {
+  const handleChange = (e) =>{
     const { name, value } = e.target;
     setUserData((prev) => ({
       ...prev,
@@ -43,7 +45,7 @@ function ProfilePage() {
     }));
   };
 
-  /* prevents page refresh etc. */
+  //prevents page refresh
   /* had to look this up */
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -73,7 +75,7 @@ function ProfilePage() {
 };
 
   // handle date changes 
-  const handleDateChange = (index, value) => {
+  const handleDateChange = (index, value) =>{
     const newAvailability = [...userData.availability];
     newAvailability[index] = value;
     setUserData((prev) => ({
@@ -100,8 +102,8 @@ function ProfilePage() {
     }));
   };
 
-  return (
-    <div className="formWrapper"> {/* center said form in screen*/}
+  return(
+    <div className="formWrapper"> {}
       <form onSubmit={handleSubmit}>
         <h1>User Profile</h1>
         

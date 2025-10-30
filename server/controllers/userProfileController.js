@@ -52,7 +52,7 @@ exports.getUserProfile = (req, res) => {
   return res.json(profile);
 };
 
-// Update user profile
+// update user profile
 exports.updateUserProfile = (req, res) => {
   const { userId } = req.params;
   if (!userId) return res.status(400).json({ message: "User ID is required" });
