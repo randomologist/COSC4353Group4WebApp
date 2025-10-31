@@ -54,6 +54,15 @@ db.serialize(() => {
       FOREIGN KEY(userId) REFERENCES UserCredentials(id),
       FOREIGN KEY(eventId) REFERENCES EventDetails(id))`
     );
-});
 
+  db.run(`
+    CREATE TABLE Notifs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    eventID INTEGER,
+    message TEXT NOT NULL,
+    details TEXT NOT NULL,
+    read BOOLEAN NOT NULL,
+    FOREIGN KEY (eventID) REFERENCES EventDetails(id)))`
+  );
+})
 module.exports = db;
