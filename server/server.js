@@ -22,9 +22,10 @@ app.use("/api/notifs",notifRoutes);
 if (process.env.NODE_ENV === "test") { // for test node_env auto == test
   module.exports = app;
 } else {
-  app.listen(5000, () => console.log("Server running"));
+  app.listen(PORT, () => console.log("Server running"));
 }
 
+/*
 // valdiations for new user
 app.post("/api/users", (req, res) => {
   const { username, password } = req.body;
@@ -115,4 +116,4 @@ app.get("/api/events", (req, res) => {
   });
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); */

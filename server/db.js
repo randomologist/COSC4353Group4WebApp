@@ -59,13 +59,13 @@ db.serialize(() => {
     );
 
   db.run(`
-    CREATE TABLE Notifs (
+    CREATE TABLE IF NOT EXISTS Notifs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     eventID INTEGER,
     message TEXT NOT NULL,
     details TEXT NOT NULL,
     read BOOLEAN NOT NULL,
-    FOREIGN KEY (eventID) REFERENCES EventDetails(id)))`
+    FOREIGN KEY (eventID) REFERENCES EventDetails(id))`
   );
 })
 module.exports = db;

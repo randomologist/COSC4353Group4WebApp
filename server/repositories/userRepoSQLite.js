@@ -27,7 +27,15 @@ function create({ email, passwordHash, role = 'volunteer' }) {
 // Tests can clear the table between runs
 function _truncate() {
   return new Promise((resolve, reject) => {
-    db.run(`DELETE FROM UserCredentials`, [], (err) => (err ? reject(err) : resolve()));
+    db.serialize(() => {
+      db.run(`DELETE FROM UserCredentials`, [], (err) => {
+        if (err) return reject(err);
+        db.run(`DELETE FROM sqlite_sequence WHERE name = ?`, ['UserCredentials'], (err2) => {
+          if (err2) return reject(err2);
+          resolve();
+        });
+      });
+    });
   });
 }
 
