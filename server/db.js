@@ -1,7 +1,10 @@
 const sqlite3 = require("sqlite3").verbose();
 
+const isTest = process.env.NODE_ENV === "test";
+const DB_PATH = isTest ? ":memory:" : "./volunteer_app.db"; // For fast testing in Vitest
+
 // Create or open a database file
-const db = new sqlite3.Database("./volunteer_app.db", (err) => {
+const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) {
     console.error("Error opening database:", err.message);
   } else {

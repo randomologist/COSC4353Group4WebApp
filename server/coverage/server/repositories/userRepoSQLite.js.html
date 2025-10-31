@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for server/controllers/eventController.js</title>
+    <title>Code coverage report for server/repositories/userRepoSQLite.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">server/controllers</a> eventController.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">server/repositories</a> userRepoSQLite.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -30,16 +30,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>11/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
@@ -96,76 +96,73 @@
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { getEvents, resetEvents, addEvent } from "../data/eventData.js";
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span></td><td class="text"><pre class="prettyprint lang-js">const db = require('../db');
 &nbsp;
-export const getAllEvents = (req, res) =&gt; {
-  res.json(getEvents());
-};
+function findByEmail(email) {
+  return new Promise((resolve, reject) =&gt; {
+    db.get(
+      `SELECT id, email, password AS passwordHash, 'volunteer' AS role
+       FROM UserCredentials WHERE LOWER(email)=LOWER(?)`,
+      [email],
+      (err, row) =&gt; (err <span class="branch-0 cbranch-no" title="branch not covered" >? reject(err) </span>: resolve(row || null))
+    );
+  });
+}
 &nbsp;
-export const createEvent = (req, res) =&gt; {
-  const {
-    title,
-    location,
-    date,
-    skillsRequired = [],
-    urgency = "Normal",
-    description = "",
-  } = req.body;
+function create({ email, passwordHash, role = 'volunteer' }) {
+  return new Promise((resolve, reject) =&gt; {
+    db.run(
+      `INSERT INTO UserCredentials (email, password) VALUES (?, ?)`,
+      [email, passwordHash],
+      function (err) {
+        if (err) <span class="branch-0 cbranch-no" title="branch not covered" >return reject(err);</span>
+        resolve({ id: this.lastID, email, role });
+      }
+    );
+  });
+}
 &nbsp;
-  if (!title || !location || !date) {
-    return res.status(400).json({ message: "Missing required fields" });
-  }
+// Tests can clear the table between runs
+function _truncate() {
+  return new Promise((resolve, reject) =&gt; {
+    db.run(`DELETE FROM UserCredentials`, [], (err) =&gt; (err <span class="branch-0 cbranch-no" title="branch not covered" >? reject(err) </span>: resolve()));
+  });
+}
 &nbsp;
-  const events = getEvents();
-  const newEvent = {
-    id: events.length + 1,
-    title,
-    location,
-    date,
-    skillsRequired,
-    urgency,
-    description,
-  };
-&nbsp;
-  addEvent(newEvent);
-  return res.status(201).json(newEvent);
-};
-&nbsp;</pre></td></tr></table></pre>
+module.exports = { findByEmail, create, _truncate };</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

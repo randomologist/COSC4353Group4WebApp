@@ -1,10 +1,14 @@
 const request = require('supertest');
 process.env.NODE_ENV = 'test';
 const app = require('../server');
-const store = require('../data/userStore');
+const repo = require('../repositories/userRepoSQLite'); // Replaced userStore require
 
 describe('Auth module', () => {
-  beforeEach(() => store._clearAll());
+  beforeEach(async () => {
+    if (process.env.NODE_ENV === 'test') {
+      await repo._truncate();
+    }
+  });
 
   it('rejects invalid registration payload', async () => {
     const res = await request(app).post('/api/auth/register').send({ email: 'bad', password: '123' });
