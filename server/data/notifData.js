@@ -45,4 +45,4 @@ let data = [
 exports.getNotifs = () => data;
 exports.resetNotifs = (newdata) => { data = newdata; };
 exports.addNotifs = (notif) => data.push(notif);
-module.exports = data;
+//module.exports = data;

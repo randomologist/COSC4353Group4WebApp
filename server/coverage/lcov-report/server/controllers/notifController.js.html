@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">93.93% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>31/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">84.61% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>11/13</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">93.93% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>31/33</span>
             </div>
         
             
@@ -77,8 +77,25 @@
 <a name='L12'></a><a href='#L12'>12</a>
 <a name='L13'></a><a href='#L13'>13</a>
 <a name='L14'></a><a href='#L14'>14</a>
-<a name='L15'></a><a href='#L15'>15</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -91,20 +108,57 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import data from "../data/notifData.js"
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { getNotifs as getNotifArray } from "../data/notifData.js";
 &nbsp;
-export function getNotifs(req,res){
-    const {cursor, limit = 5} = req.query;
-    const index = cursor? data.findIndex(n =&gt; n.id === parseInt(cursor)) : -1;
-    if(cursor &amp;&amp; index === -1){
-         return res.json({ items: [], hasMore: false, next: null });
+export function getNotifs(req, res) {
+  try {
+    const all = getNotifArray(); // &lt;-- fetch the in-memory array
+    const limitNum = Math.max(1, parseInt(req.query.limit, 10) || 5);
+&nbsp;
+    // cursor is the id of the <span class="branch-0 cbranch-no" title="branch not covered" >last item from previous page</span>
+    const cursorVal = req.query.cursor ? parseInt(req.query.cursor, 10) : null;
+    if (Number.isNaN(cursorVal)) {
+      return res.status(200).json({ items: [], hasMore: false, next: null });
     }
-    const start = index &gt;=0? index + 1: 0;
-    const items = data.slice(start, start+parseInt(limit));
-    const hasMore = start+items.length &lt; data.length;
-    const next = hasMore? items[items.length-1].id : null;
 &nbsp;
-    res.json({ items, hasMore, next});
+    const startIndex = cursorVal
+      ? all.findIndex(n =&gt; n.id === cursorVal) + 1
+      : 0;
+&nbsp;
+    if (cursorVal &amp;&amp; startIndex === 0) {
+      // cursor id not found -&gt; empty page, no more
+      return res.status(200).json({ items: [], hasMore: false, next: null });
+    }
+&nbsp;
+    const items = all.slice(startIndex, startIndex + limitNum);
+    const nextIndex = startIndex + items.length;
+    const <span class="branch-0 cbranch-no" title="branch not covered" >hasMore = nextIndex &lt; all.length;</span>
+<span class="cstat-no" title="statement not covered" >    const next = hasMore ? all[nextIndex - 1].id : null;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+    res.status(200).json({ items, hasMore, next });
+  } catch (e) {
+    console.error("notif list error:", e);
+    res.status(500).json({ error: "Internal error" });
+  }
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -112,7 +166,7 @@ export function getNotifs(req,res){
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-01T04:04:59.043Z
+                at 2025-11-01T04:11:32.495Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
