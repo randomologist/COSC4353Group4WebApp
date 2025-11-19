@@ -1,9 +1,18 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import './NavBar.css'
 import Notif from './Notif'
 import NotifToggle from './NotifToggle'
+import { useAuth } from '../auth/useAuth'
 
 function NavBar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () =>{
+    logout();
+    navigate('/auth');
+  }
+
   return (
     <nav className="nav">
       <div className="nav-links">
@@ -22,12 +31,17 @@ function NavBar() {
         <NavLink to="/VolunteerHistory" className={({ isActive }) => (isActive ? 'active' : '')}>
           Volunteer History
         </NavLink>
-        <NavLink to="/auth" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Sign in
-        </NavLink>
       </div>
       <div className="navbar-right">
         <NotifToggle />
+        {user?
+          (<button className = "acc-ctrl-btn" onClick = {handleLogout}>Log Out</button>)
+          :
+          (<NavLink to="/auth" className = "acc-ctrl-btn">
+              Sign in
+            </NavLink>
+          )
+        }
       </div>
     </nav>
   )

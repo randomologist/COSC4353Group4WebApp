@@ -1,4 +1,4 @@
-import {useNotifs} from "../hooks/notifs";
+import {useNotifs} from "../hooks/useNotifs";
 import { useEffect, useState, useRef } from "react";
 import './NotifDropdown.css';
 import Notif from "./Notif";

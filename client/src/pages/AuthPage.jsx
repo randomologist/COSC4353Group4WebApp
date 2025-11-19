@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from "../auth/useAuth"
 import './AuthPage.css'
 
 function AuthPage(){
@@ -28,6 +29,7 @@ function AuthPage(){
     });
 
     const navigate = useNavigate();
+    const {login, register} = useAuth();
     const [error, setError] = useState('');
     const [submitting, setSubmitting] = useState(false);
 
@@ -53,26 +55,13 @@ function AuthPage(){
             return;
         }
 
-        const endpoint = mode === 'sign-up' ? '/api/auth/register' : '/api/auth/login';
-        const payload = { email: formData.email, password: formData.password };
-
         try {
-            const res = await fetch(`http://localhost:5000${endpoint}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            });
-            const data = await res.json();
-
-            if (!res.ok) {
-                setError(data?.error || 'Authentication failed');
-                setSubmitting(false);
-                return;
+            if(mode === 'sign-up'){
+                await register(formData.email, formData.password);
             }
-
-            // success: store token & user, then go home
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
+            else{
+                await login(formData.email, formData.password);
+            }
             navigate('/home');
         } catch {
             setError('Network error. Is the server running on :5000?');
@@ -86,8 +75,8 @@ function AuthPage(){
             <div id="formBody">
                 <h2>{mode === "sign-up" ? "Sign Up" : "Log In"}</h2>
                 {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
-                <div class="section">
-                    <span class="authLabel">Email</span>
+                <div className="section">
+                    <span className="authLabel">Email</span>
                     <input
                     name="email"
                     type="text"
@@ -96,8 +85,8 @@ function AuthPage(){
                     onChange={handleChange}
                     />
                 </div>
-                <div class="section">
-                    <span class="authLabel">Password</span>
+                <div className="section">
+                    <span className="authLabel">Password</span>
                     <input
                     name="password"
                     type="password"
@@ -108,8 +97,8 @@ function AuthPage(){
                     {mode === "login" && ( <a id="forgot-pass">Forgot Password</a>)}
                 </div>
                 {mode === "sign-up" && (
-                <div class="section">
-                    <span class="authLabel">Confirm Password</span>
+                <div className="section">
+                    <span className="authLabel">Confirm Password</span>
                     <input
                     name="confirmPassword"
                     type="password"
