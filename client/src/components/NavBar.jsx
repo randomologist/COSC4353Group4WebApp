@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import './NavBar.css'
 import Notif from './Notif'
 import NotifToggle from './NotifToggle'
-import { useAuth } from '../auth/useAuth'
+import { useAuth } from '../auth/AuthProvider'
 
 function NavBar() {
   const { user, logout } = useAuth();
