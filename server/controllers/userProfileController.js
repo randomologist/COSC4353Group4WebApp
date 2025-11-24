@@ -46,8 +46,12 @@ const validateProfile = (profile) => {
 
 // Create user profile
 exports.createUserProfile = (req, res) => {
-  const { fullName, address1, address2, city, state, zipCode, skills, preferences, availability } = req.body;
-  
+  const { fullName, address1, address2, city, state, zipCode, skills, preferences, availability, userId:bodyUID } = req.body;
+  const userId = req.user.id;
+  const userRole = req.user.role;
+
+  const targUID = userRole === "admin" && bodyUID? bodyUID : userId;
+
   const error = validateProfile({ fullName, address1, city, state, zipCode, skills, availability });
   if (error) return res.status(400).json({ message: error });
 
@@ -63,7 +67,8 @@ exports.createUserProfile = (req, res) => {
       zipCode,
       skills,
       preferences,
-      availability
+      availability,
+      userId: targUID
     };
     userProfiles.push(newProfile);
     return res.status(201).json({ message: "Profile created successfully", id: newProfile.id });
@@ -71,8 +76,8 @@ exports.createUserProfile = (req, res) => {
 
   // Use real database in production
   const sql = `
-    INSERT INTO UserProfile (fullName, address1, address2, city, state, zip, skills, preferences, availability)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO UserProfile (fullName, address1, address2, city, state, zip, skills, preferences, availability, userId)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   db.run(sql, [
@@ -84,7 +89,8 @@ exports.createUserProfile = (req, res) => {
     zipCode, // Database column is 'zip' but we accept 'zipCode' from frontend
     JSON.stringify(skills),
     preferences || null,
-    JSON.stringify(availability)
+    JSON.stringify(availability),
+    targUID
   ], function(err) {
     if (err) {
       console.error("Database error:", err);
@@ -93,7 +99,17 @@ exports.createUserProfile = (req, res) => {
     
     res.status(201).json({ 
       message: "Profile created successfully", 
-      id: this.lastID 
+      id: this.lastID,
+      userId:targUID,
+      fullName,
+      address1,
+      address2,
+      city,
+      state,
+      zipCode,
+      skills,
+      preferences,
+      availability
     });
   });
 };
@@ -101,7 +117,11 @@ exports.createUserProfile = (req, res) => {
 // Get user profile by ID
 exports.getUserProfile = (req, res) => {
   const { userId } = req.params;
+  const {id, role} = req.user;
   if (!userId) return res.status(400).json({ message: "User ID is required" });
+  if (role !== "admin" && userId !== id) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
 
   if (isTestMode) {
     // Use mock data in test mode
@@ -111,7 +131,7 @@ exports.getUserProfile = (req, res) => {
   }
 
   // Use real database in production
-  db.get(`SELECT * FROM UserProfile WHERE id = ?`, [userId], (err, row) => {
+  db.get(`SELECT * FROM UserProfile WHERE userId = ?`, [userId], (err, row) => {
     if (err) {
       console.error("Database error:", err);
       return res.status(500).json({ message: "Failed to fetch profile" });
@@ -133,32 +153,59 @@ exports.getUserProfile = (req, res) => {
   });
 };
 
+exports.getMyProfile = (req,res) =>{
+  const userId = req.user.id
+  const sql = `SELECT * FROM userProfile WHERE userId=?`;
+  db.get(sql, [userId], (err,row) =>{
+    if(err){
+      console.error("Database error:", err);
+      return res.status(500).json({ message: "Failed to fetch profile" });
+    }
+    if(!row){
+      return res.status(404).json({ message: "No profile found for this user" });
+    }
+     const profile = {
+      ...row,
+      zipCode: row.zip, // Convert 'zip' to 'zipCode' for frontend
+      skills: JSON.parse(row.skills || '[]'),
+      availability: JSON.parse(row.availability || '[]')
+    };
+
+    res.json(profile);
+  });
+};
+
 // Update user profile
 exports.updateUserProfile = (req, res) => {
   const { userId } = req.params;
   if (!userId) return res.status(400).json({ message: "User ID is required" });
 
+  const { id, role } = req.user;
+  if (role !== "admin" && parseInt(userId) !== id) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
   const { fullName, address1, address2, city, state, zipCode, skills, preferences, availability } = req.body;
 
   const error = validateProfile({ fullName, address1, city, state, zipCode, skills, availability });
   if (error) return res.status(400).json({ message: error });
-
+/*
   if (isTestMode) {
     // Use mock data in test mode
+    console.log("testmode");
     const profileIndex = userProfiles.findIndex(p => p.id === parseInt(userId));
     if (profileIndex === -1) return res.status(404).json({ message: "User profile not found" });
 
     const updatedProfile = { ...req.body, id: parseInt(userId) };
     userProfiles[profileIndex] = updatedProfile;
     return res.json(updatedProfile);
-  }
+  }*/
 
   // Use real database in production
   const sql = `
     UPDATE UserProfile 
     SET fullName = ?, address1 = ?, address2 = ?, city = ?, state = ?, 
         zip = ?, skills = ?, preferences = ?, availability = ?
-    WHERE id = ?
+    WHERE userId = ?
   `;
 
   db.run(sql, [
@@ -179,10 +226,19 @@ exports.updateUserProfile = (req, res) => {
     }
 
     if (this.changes === 0) {
-      return res.status(404).json({ message: "User profile not found" });
+      return res.status(404).json({ message: "User profile not found!" });
     }
 
-    res.json({ message: "Profile updated successfully" });
+    res.json({userId: parseInt(userId),
+      fullName,
+      address1,
+      address2,
+      city,
+      state,
+      zipCode,
+      skills,
+      preferences,
+      availability});
   });
 };
 

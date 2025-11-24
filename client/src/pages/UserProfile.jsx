@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "../auth/AuthProvider"
 import "./UserProfile.css"; 
 
 function ProfilePage() {
@@ -14,16 +15,21 @@ function ProfilePage() {
     availability: []
   });
   
-  const [profileId, setProfileId] = useState(null);
+  const {token, user} = useAuth();
   // loads the user profile
   useEffect(() => {
     const loadProfile = async () => {
       try{
-        const response = await fetch("http://localhost:5000/api/userProfile/1");
+        const response = await fetch("http://localhost:5000/api/userProfile/me",{
+          method: "GET",
+          headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+        });
         if (response.ok){
           const data = await response.json();
           setUserData(data);
-          setProfileId(1);
         } else {
           console.log("No profile found, will create new one");
         }
@@ -49,29 +55,34 @@ function ProfilePage() {
   e.preventDefault();
   
   try {
-    const url = profileId 
-      ? `http://localhost:5000/api/userProfile/${profileId}` 
+    const method = userData?.id? "PUT" : "POST";
+    const url = method === "PUT" 
+      ? `http://localhost:5000/api/userProfile/${user.id}` 
       : "http://localhost:5000/api/userProfile";
-    
-    const method = profileId ? "PUT" : "POST";
     
     const response = await fetch(url, {
       method: method,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(userData)
     });
 
     if (response.ok) {
       const result = await response.json();
-      if (!profileId && result.id) {
-        setProfileId(result.id);
-      }
+      setUserData(result);
       alert("Profile saved!");
     } else {
-      const error = await response.json();
-      alert("Error: " + error.message);
+      let errorMessage = `Error ${response.status}`;
+      try{
+        const error = await response.json(); // try JSON
+        errorMessage = error.message || errorMessage;
+      }catch{
+        const text = await response.text(); // fallback to plain text/HTML
+        errorMessage = text || errorMessage;
+      }
+      alert("Error: " + errorMessage);
     }
   } catch (error) {
     console.error("Request failed:", error);
@@ -118,7 +129,7 @@ function ProfilePage() {
           <input
             type="text"
             name="fullName"
-            value={userData.fullName}
+            value={userData.fullName || ""}
             maxLength={50}
             onChange={handleChange}
             required
@@ -132,7 +143,7 @@ function ProfilePage() {
           <input
             type="text"
             name="address1"
-            value={userData.address1}
+            value={userData.address1 || ""}
             maxLength={100}
             onChange={handleChange}
             placeholder="1234 Main St"
@@ -146,7 +157,7 @@ function ProfilePage() {
           <input
             type="text"
             name="address2"
-            value={userData.address2}
+            value={userData.address2 || ""}
             maxLength={100}
             onChange={handleChange}
             placeholder= "Apt #, suite, etc. (optional)" 
@@ -159,7 +170,7 @@ function ProfilePage() {
           <input
             type="text"
             name="city"
-            value={userData.city}
+            value={userData.city || ""}
             onChange={handleChange}
             required
             maxLength={100}
@@ -172,7 +183,7 @@ function ProfilePage() {
           State:
           <select
             name="state"
-            value={userData.state}
+            value={userData.state || ""}
             onChange={handleChange}
             required
           >
@@ -236,7 +247,7 @@ function ProfilePage() {
           <input
             type="text"
             name="zipCode"
-            value={userData.zipCode}
+            value={userData.zipCode || ""}
             maxLength={9}
             minLength={5}
             onChange={handleChange}
@@ -251,7 +262,7 @@ function ProfilePage() {
             name="skills"
             multiple
             required
-            value={userData.skills}
+            value={userData.skills || []}
             onChange={(e) => {
               const selected = Array.from(
                 e.target.selectedOptions, // HTMLCollection → array
