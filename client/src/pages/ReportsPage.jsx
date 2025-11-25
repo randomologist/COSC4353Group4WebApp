@@ -103,6 +103,55 @@ function ReportsPage() {
     }
   }
 
+  async function downloadPdf() {
+    setError(null);
+
+    try {
+      if (!token) {
+        throw new Error("unauthorized");
+      }
+
+      const endpoint =
+        reportType === "volunteers" ? "/volunteers" : "/events";
+
+      const res = await fetch(`${API_BASE}${endpoint}?format=pdf`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 401) {
+        throw new Error("unauthorized");
+      }
+      if (!res.ok) {
+        throw new Error(`Server responded with ${res.status}`);
+      }
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const filename =
+        reportType === "volunteers"
+          ? "volunteer_report.pdf"
+          : "event_report.pdf";
+
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error(err);
+      if (err.message === "unauthorized") {
+        setError("You must be signed in to download reports.");
+      } else {
+        setError("Failed to download PDF.");
+      }
+    }
+  }
+
   // derive simple columns from first row
   const columns = rows.length > 0 ? Object.keys(rows[0]) : [];
 
@@ -135,6 +184,8 @@ function ReportsPage() {
         </button>
 
         <button onClick={downloadCsv}>Download CSV</button>
+
+        <button onClick={downloadPdf}>Download PDF</button>
       </div>
 
       {error && (
