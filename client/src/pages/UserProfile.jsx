@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../auth/AuthProvider"
+import { getSkills } from "../hooks/sharedOptions";
 import "./UserProfile.css"; 
 
 function ProfilePage() {
@@ -14,7 +15,7 @@ function ProfilePage() {
     preferences: "",
     availability: []
   });
-  
+  const skillsOptions = getSkills();
   const {token, user} = useAuth();
   // loads the user profile
   useEffect(() => {
@@ -273,26 +274,9 @@ function ProfilePage() {
                 skills: selected
               }));
             }}>
-            <option value="teaching">Teaching / Tutoring</option>
-            <option value="event-setup">Event Setup / Breakdown</option>
-            <option value="cooking">Cooking / Food Preparation</option>
-            <option value="serving">Serving Food / Hospitality</option>
-            <option value="first-aid">First Aid / CPR</option>
-            <option value="childcare">Childcare</option>
-            <option value="elderly-care">Elderly Care</option>
-            <option value="driving">Driving / Transportation</option>
-            <option value="fundraising">Fundraising</option>
-            <option value="public-speaking">Public Speaking</option>
-            <option value="marketing">Marketing / Outreach</option>
-            <option value="social-media">Social Media Management</option>
-            <option value="admin">Administrative Support</option>
-            <option value="it-support">IT Support / Tech Help</option>
-            <option value="translation">Language Translation</option>
-            <option value="photography">Photography / Videography</option>
-            <option value="music">Music / Entertainment</option>
-            <option value="gardening">Gardening / Landscaping</option>
-            <option value="cleaning">Cleaning / Sanitation</option>
-            <option value="customer-service">Customer Service</option>
+            {skillsOptions.map((skill) => (
+              <option key={skill} value={skill}>{skill}</option>
+            ))}
           </select>
         </label>
 
