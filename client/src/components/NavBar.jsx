@@ -16,25 +16,32 @@ function NavBar() {
   return (
     <nav className="nav">
       <div className="nav-links">
+        <div className = "free-nav">
         <NavLink to="/home" className={({ isActive }) => (isActive ? 'active' : '')}>
           Home
         </NavLink>
-        <NavLink to="/UserProfilePage" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Profile
-        </NavLink>
-        <NavLink to="/EventManagement" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Event Management
-        </NavLink>
-        <NavLink to="/VolunteerMatching" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Volunteer Matching
-        </NavLink>
-        <NavLink to="/VolunteerHistory" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Volunteer History
-        </NavLink>
-        <NavLink to="/reports" className={({ isActive }) => (isActive ? 'active' : '')}>
-          Reports
-        </NavLink>
-      </div>
+        </div>
+        {user &&
+          (<div className = "user-nav">
+            <NavLink to="/UserProfilePage" className={({ isActive }) => (isActive ? 'active' : '')}>
+              Profile
+            </NavLink>
+            <NavLink to="/VolunteerHistory" className={({ isActive }) => (isActive ? 'active' : '')}>
+              Volunteer History
+            </NavLink>
+          </div>)
+        }
+        {user &&
+        (<div className = "admin-nav">
+            <NavLink to="/EventManagement" className={({ isActive }) => (isActive ? 'active' : '')}>
+              Event Management
+            </NavLink>
+            <NavLink to="/reports" className={({ isActive }) => (isActive ? 'active' : '')}>
+              Reports
+            </NavLink>
+        </div>)
+        }
+        </div>
       <div className="navbar-right">
         <NotifToggle />
         {user?

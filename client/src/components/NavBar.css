@@ -15,6 +15,26 @@
 .nav-brand {
   font-weight: 700;
 }
+
+.nav-links{
+  display:flex
+}
+
+.free-nav{
+  height:100%;
+  display:flex;
+}
+
+.user-nav{
+  height:100%;
+  display:flex;
+}
+
+.admin-nav{
+  height:100%;
+  display:flex;
+}
+
 .nav-links a {
   color: rgba(255,255,255,0.9);
   text-decoration: none;
