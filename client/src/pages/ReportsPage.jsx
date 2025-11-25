@@ -3,6 +3,11 @@ import { useAuth } from "../auth/AuthProvider";
 
 const API_BASE = "http://localhost:5000/api/reports";
 
+const reportMap = {
+  volunteers: {label: "Volunteers & History", api: "/volunteers", reportName: "volunteer_report"},
+  events: {label: "Events & Assignments", api: "/events", reportName: "event_report"}
+};
+
 function ReportsPage() {
   const { token, user } = useAuth();
   const [reportType, setReportType] = useState("volunteers"); // 'volunteers' | 'events'
@@ -19,9 +24,9 @@ function ReportsPage() {
         throw new Error("unauthorized");
         }
 
-        const endpoint =
-            reportType === "volunteers" ? "/volunteers" : "/events";
+        const endpoint = reportMap[reportType].api
 
+        //fetch url example http://localhost:5000/api/reports /volunteers ?format=json
         const res = await fetch(`${API_BASE}${endpoint}?format=json`, {
           method: "GET",
           headers: {
@@ -62,9 +67,9 @@ function ReportsPage() {
           throw new Error("unauthorized");
         }
 
-        const endpoint =
-          reportType === "volunteers" ? "/volunteers" : "/events";
+        const endpoint = reportMap[reportType].api
 
+        //fetch url example http://localhost:5000/api/reports /volunteers ?format=csv
         const res = await fetch(`${API_BASE}${endpoint}?format=csv`, {
           method: "GET",
           headers: {
@@ -82,10 +87,7 @@ function ReportsPage() {
         const blob = await res.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
-        const filename =
-          reportType === "volunteers"
-            ? "volunteer_report.csv"
-            : "event_report.csv";
+        const filename = reportMap[reportType].reportName + ".csv"
 
         a.href = url;
         a.download = filename;
@@ -111,9 +113,9 @@ function ReportsPage() {
         throw new Error("unauthorized");
       }
 
-      const endpoint =
-        reportType === "volunteers" ? "/volunteers" : "/events";
+      const endpoint = reportMap[reportType].api
 
+      //fetch url example http://localhost:5000/api/reports /volunteers ?format=pdf
       const res = await fetch(`${API_BASE}${endpoint}?format=pdf`, {
         method: "GET",
         headers: {
@@ -131,10 +133,7 @@ function ReportsPage() {
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
-      const filename =
-        reportType === "volunteers"
-          ? "volunteer_report.pdf"
-          : "event_report.pdf";
+      const filename = reportMap[reportType].reportName + ".pdf"
 
       a.href = url;
       a.download = filename;
@@ -174,8 +173,9 @@ function ReportsPage() {
             value={reportType}
             onChange={(e) => setReportType(e.target.value)}
           >
-            <option value="volunteers">Volunteers & History</option>
-            <option value="events">Events & Assignments</option>
+            {Object.entries(reportMap).map(([key, dataObj]) => (
+              <option key={key} value={key}>{dataObj.label}</option>
+            ))}
           </select>
         </label>
 
