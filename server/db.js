@@ -45,7 +45,9 @@ db.serialize(() => {
       location TEXT NOT NULL,
       requiredSkills TEXT NOT NULL,
       urgency TEXT NOT NULL,
-      eventDate TEXT NOT NULL)`
+      eventDate TEXT NOT NULL,
+      startTime TEXT NOT NULL,
+      endTime TEXT NOT NULL)`
     );
 
   db.run(`
