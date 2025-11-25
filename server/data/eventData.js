@@ -25,5 +25,5 @@ const mock = {
 const active = mock;
 //exports
 export const getEvents = active.getEvents;
-export const resetEvents = active.getEvents;
-export const addEvent = active.getEvents;
+export const resetEvents = active.resetEvents;
+export const addEvent = active.addEvent;
