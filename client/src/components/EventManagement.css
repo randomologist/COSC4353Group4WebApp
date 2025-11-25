@@ -27,7 +27,7 @@ h2 {
 
 label {
   display: block;
-  margin-bottom: 15px;
+  margin-top: 25px;
   font-weight: bold;
   color: #555;
 }
@@ -60,4 +60,11 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.time-selector{
+  display:flex;
+}
+.time-selector-sub{
+  width:50%;
 }

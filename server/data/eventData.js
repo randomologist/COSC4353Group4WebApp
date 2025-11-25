@@ -4,7 +4,7 @@ let events = [
     id: 1,
     title: "Food Drive",
     location: "Houston",
-    date: "2025-10-20",
+    eventDate: "2025-10-20",
     skillsRequired: ["Organization", "Communication"],
     urgency: "High",
     description: "Help distribute food to local families."

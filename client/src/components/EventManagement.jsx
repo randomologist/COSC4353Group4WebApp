@@ -9,6 +9,8 @@ function EventManagement() {
     requiredSkills: [],
     urgency: "",
     eventDate: "",
+    startTime:"",
+    endTime:""
   });
 
   const [errors, setErrors] = useState({});
@@ -66,10 +68,11 @@ function EventManagement() {
         <h2>Event Management</h2>
         {/* Event Name */}
         <div>
-          <label>Event Name</label><br />
+          <label htmlFor = "eventName">Event Name</label>
           <input
             type="text"
             name="eventName"
+            id = "eventName"
             value={formData.eventName}
             onChange={handleChange}
             maxLength={100}
@@ -80,9 +83,10 @@ function EventManagement() {
 
         {/* Event Description (using textarea just to be safe for descriptions)*/}
         <div>
-          <label>Event Description</label><br />
+          <label htmlFor = "eventDescription">Event Description</label>
           <textarea
             name="eventDescription"
+            id = "eventDescription"
             value={formData.eventDescription}
             onChange={handleChange}
             placeholder="Description of Event"
@@ -92,9 +96,10 @@ function EventManagement() {
         
         {/* Location (using textarea just to be safe for long locations)*/}
         <div>
-          <label>Location</label><br />
+          <label htmlFor = "location">Location</label>
           <textarea
             name="location"
+            id = "location"
             value={formData.location}
             onChange={handleChange}
             placeholder="Address of Event"
@@ -104,8 +109,8 @@ function EventManagement() {
 
         {/* Required Skills */}
         <div>
-          <label>Required Skills (Hold CTRL to select more than one)</label><br />
-          <select multiple value={formData.requiredSkills} onChange={handleMultiSelect}>
+          <label htmlFor = "requiredSkills">Required Skills (Hold CTRL to select more than one)</label>
+          <select id = "requiredSkills" multiple value={formData.requiredSkills} onChange={handleMultiSelect}>
             {skillsOptions.map((skill) => (
               <option key={skill} value={skill}>{skill}</option>
             ))}
@@ -115,8 +120,8 @@ function EventManagement() {
 
         {/* Urgency */}
         <div>
-          <label>Urgency</label><br />
-          <select name="urgency" value={formData.urgency} onChange={handleChange}>
+          <label htmlFor = "urgency">Urgency</label>
+          <select name="urgency" id = "urgency" value={formData.urgency} onChange={handleChange}>
             <option value="">-- Select urgency --</option>
             {urgencyOptions.map((level) => (
               <option key={level} value={level}>{level}</option>
@@ -127,16 +132,27 @@ function EventManagement() {
 
         {/* Event Date */}
         <div>
-          <label>Event Date</label><br />
+          <label htmlFor = "eventDate">Event Date</label>
           <input
             type="date"
             name="eventDate"
+            id = "eventDate"
             value={formData.eventDate}
             onChange={handleChange}
           />
           {errors.eventDate && <p style={{ color: "red" }}>{errors.eventDate}</p>}
         </div>
-
+        {/* Event Time*/}
+        <div className="time-selector">
+            <div className = "time-selector-sub">
+              <label htmlFor = "startTime">Event Start Time</label>
+              <input type="time" name="startTime"  id = "startTime"value={formData.startTime} onChange={handleChange} />
+            </div>
+            <div className = "time-selector-sub">
+              <label htmlFor = "endTime">Event End Time</label>
+              <input type="time" name="endTime"  id="endTime"value={formData.endTime} onChange={handleChange} />
+            </div>
+        </div>
         <br />
         {/* Submission Button */}
         <button type="submit">Create Event</button>
