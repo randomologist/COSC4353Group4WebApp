@@ -1,0 +1,25 @@
+export function getSkills() {
+    return [
+        "Teaching / Tutoring", 
+        "Communication", 
+        "Organization", 
+        "Event Setup / Breakdown", 
+        "Cooking / Food Preparation", 
+        "Serving Food / Hospitality", 
+        "First Aid / CPR", 
+        "Childcare", 
+        "Elderly Care", 
+        "Driving / Transportation", 
+        "Fundraising", 
+        "Public Speaking", 
+        "Marketing / Outreach", 
+        "Social Media Management", 
+        "Administrative Support", 
+        "IT Support / Tech Help", 
+        "Language Translation", 
+        "Photography / Videography", 
+        "Music / Entertainment", 
+        "Gardening / Landscaping", 
+        "Cleaning / Sanitation", 
+        "Customer Service"];
+}
