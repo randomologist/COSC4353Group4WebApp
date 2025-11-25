@@ -33,6 +33,9 @@ function NavBar() {
         }
         {user &&
         (<div className = "admin-nav">
+            <NavLink to="/VolunteerMatching" className={({ isActive }) => (isActive ? 'active' : '')}>
+              Volunteer Matching
+            </NavLink>
             <NavLink to="/EventManagement" className={({ isActive }) => (isActive ? 'active' : '')}>
               Event Management
             </NavLink>
