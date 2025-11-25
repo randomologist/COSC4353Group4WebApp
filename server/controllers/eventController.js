@@ -6,27 +6,29 @@ export const getAllEvents = (req, res) => {
 
 export const createEvent = (req, res) => {
   const {
-    title,
+    eventName,
     location,
     eventDate,
-    startTime = null,
-    endTime = null,
-    skillsRequired = [],
+    startTime,
+    endTime,
+    requiredSkills = [],
     urgency = "Normal",
     description = "",
   } = req.body;
 
-  if (!title || !location || !date) {
+  if (!eventName || !location || !eventDate) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   const events = getEvents();
   const newEvent = {
     id: events.length + 1,
-    title,
+    eventName,
     location,
     eventDate,
-    skillsRequired,
+    startTime,
+    endTime,
+    requiredSkills,
     urgency,
     description,
   };

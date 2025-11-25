@@ -87,7 +87,7 @@ function VolunteerMatching() {
           <ul>
             {matchedEvents.map((event) => (
               <li key={event.id} style={{color: 'black'}}>
-                <strong>{event.title}</strong> (Requires: {event.skillsRequired.join(", ")})
+                <strong>{event.eventName}</strong> (Requires: {event.requiredSkills.join(", ")})
                 <button onClick={() => handleAssign(event.id)}>Assign</button>
               </li>
             ))}

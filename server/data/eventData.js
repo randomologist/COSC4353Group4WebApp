@@ -2,10 +2,12 @@ let events = [
   {
     // mock event data
     id: 1,
-    title: "Food Drive",
+    eventName: "Food Drive",
     location: "Houston",
     eventDate: "2025-10-20",
-    skillsRequired: ["Organization", "Communication"],
+    startTime:"10:00",
+    endTime:"15:00",
+    requiredSkills: ["Organization", "Communication"],
     urgency: "High",
     description: "Help distribute food to local families."
   }

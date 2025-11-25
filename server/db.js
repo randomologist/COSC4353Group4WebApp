@@ -67,5 +67,22 @@ db.serialize(() => {
     read BOOLEAN NOT NULL,
     FOREIGN KEY (eventID) REFERENCES EventDetails(id))`
   );
+  //Add new startTime and endTime columns to eventDetails if they don't exist
+  db.all(`PRAGMA table_info(EventDetails);`, (err, rows) => {
+    if (err) {
+      console.error("Error checking EventDetails schema:", err.message);
+      return;
+    }
+
+    const columns = rows.map(r => r.name);
+    if (!columns.includes("startTime")) {
+      db.run(`ALTER TABLE EventDetails ADD COLUMN startTime TEXT;`);
+      console.log("Added startTime column to EventDetails");
+    }
+    if (!columns.includes("endTime")) {
+      db.run(`ALTER TABLE EventDetails ADD COLUMN endTime TEXT;`);
+      console.log("Added endTime column to EventDetails");
+    }
+  });
 })
 module.exports = db;

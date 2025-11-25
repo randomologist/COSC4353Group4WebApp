@@ -4,7 +4,7 @@ import "./EventManagement.css";
 function EventManagement() {
   const [formData, setFormData] = useState({
     eventName: "",
-    eventDescription: "",
+    description: "",
     location: "",
     requiredSkills: [],
     urgency: "",
@@ -34,7 +34,7 @@ function EventManagement() {
     let newErrors = {};
     if (!formData.eventName) newErrors.eventName = "An event name is required.";
     else if (formData.eventName.length > 100) newErrors.eventName = "Max 100 characters.";
-    if (!formData.eventDescription) newErrors.eventDescription = "A description is required.";
+    if (!formData.description) newErrors.description = "A description is required.";
     if (!formData.location) newErrors.location = "A location is required.";
     if (formData.requiredSkills.length === 0) newErrors.requiredSkills = "Select at least one skill.";
     if (!formData.urgency) newErrors.urgency = "Select an urgency level.";
@@ -49,15 +49,23 @@ function EventManagement() {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
+      const normalizedEvent = {
+        ...formData,
+        //if start and end time not set, event will last the whole day
+        startTime: formData.startTime || "00:00",
+        endTime: formData.endTime || "23:59"
+      };
       console.log("Event Created:", formData);
       alert("Event created successfully!");
       setFormData({
         eventName: "",
-        eventDescription: "",
+        description: "",
         location: "",
         requiredSkills: [],
         urgency: "",
         eventDate: "",
+        startTime: "",
+        endTime: ""
       });
     }
   };
@@ -83,15 +91,15 @@ function EventManagement() {
 
         {/* Event Description (using textarea just to be safe for descriptions)*/}
         <div>
-          <label htmlFor = "eventDescription">Event Description</label>
+          <label htmlFor = "description">Event Description</label>
           <textarea
-            name="eventDescription"
-            id = "eventDescription"
-            value={formData.eventDescription}
+            name="description"
+            id = "description"
+            value={formData.description}
             onChange={handleChange}
             placeholder="Description of Event"
           />
-          {errors.eventDescription && <p style={{ color: "red" }}>{errors.eventDescription}</p>}
+          {errors.description && <p style={{ color: "red" }}>{errors.description}</p>}
         </div>
         
         {/* Location (using textarea just to be safe for long locations)*/}

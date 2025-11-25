@@ -34,7 +34,7 @@ exports.getMatchedEvents = (req, res) => {
 
   // logiv to match event based on skill and then availability
   const matchedEvents = events.filter(event => {
-    const hasSkill = event.skillsRequired.some(skill => volunteer.skills.includes(skill));
+    const hasSkill = event.requiredSkills.some(skill => volunteer.skills.includes(skill));
     const isAvailable = volunteer.availability.includes(event.date);
     return hasSkill && isAvailable;
   });
@@ -80,7 +80,7 @@ exports.assignVolunteerToEvent = (req, res) => {
     volunteerId: parseInt(volunteerId),
     eventId: parseInt(eventId),
     volunteerName: volunteer.fullName,
-    eventName: event.title,
+    eventName: event.eventName,
     status: "Assigned"
   };
 
