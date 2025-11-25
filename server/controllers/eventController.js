@@ -1,10 +1,10 @@
-import { getEvents, resetEvents, addEvent } from "../data/eventData.js";
+const { getEvents, addEvent } = require("../repositories/eventRepo.js");
 
-export const getAllEvents = (req, res) => {
+const getAllEvents = (req, res) => {
   res.json(getEvents());
 };
 
-export const createEvent = (req, res) => {
+const createEvent = (req, res) => {
   const {
     eventName,
     location,
@@ -26,8 +26,8 @@ export const createEvent = (req, res) => {
     eventName,
     location,
     eventDate,
-    startTime,
-    endTime,
+    startTime: startTime || "00:00",
+    endTime: endTime || "23:59",
     requiredSkills,
     urgency,
     description,
@@ -36,3 +36,5 @@ export const createEvent = (req, res) => {
   addEvent(newEvent);
   return res.status(201).json(newEvent);
 };
+
+module.exports = { getAllEvents, createEvent}

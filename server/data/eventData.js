@@ -18,11 +18,7 @@ const mock = {
   addEvent: (event) => events.push(event)
 };
 
-/*const db = {
-  getEvents: (),
-  resetEvents: (data),
-  addEvent: (event) => 
-}*/
+
 //choose which you use
 const active = mock;
 //exports

@@ -1,6 +1,6 @@
-import { getNotifs as getNotifArray } from "../data/notifData.js";
+const { getNotifs: getNotifArray } = require("../data/notifData.js");
 
-export function getNotifs(req, res) {
+function getNotifs(req, res) {
   try {
     const all = getNotifArray(); // <-- fetch the in-memory array
     const limitNum = Math.max(1, parseInt(req.query.limit, 10) || 5);
@@ -31,3 +31,4 @@ export function getNotifs(req, res) {
     res.status(500).json({ error: "Internal error" });
   }
 }
+module.exports = { getNotifs };

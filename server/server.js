@@ -9,7 +9,7 @@ const corsOptions = {
   credentials: true,              // allow cookies / Authorization headers
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const userProfileRoutes = require("./routes/userProfile");
