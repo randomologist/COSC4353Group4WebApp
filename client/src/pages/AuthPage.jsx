@@ -63,8 +63,13 @@ function AuthPage(){
                 await login(formData.email, formData.password);
             }
             navigate('/home');
-        } catch {
-            setError('Network error. Is the server running on :5000?');
+        } catch (err) {
+            console.error(err);
+            if (err.message === "Failed to fetch") {
+                setError("Network error. Is the server running on :5000?");
+            } else {
+                setError(err.message || "Something went wrong.");
+            }
         } finally {
             setSubmitting(false);
         }

@@ -15,8 +15,18 @@ export function AuthProvider({ children }){
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
         });
-        if(!res.ok){throw new Error("Login failed");}
-        const data = await res.json();
+        
+        let data = null;
+        try {
+          data = await res.json();   // may be { error: "Invalid credentials" } or the normal payload
+        } catch {
+          data = null;
+        }
+
+        if (!res.ok) {
+          const msg = data?.error || "Login failed";
+          throw new Error(msg);
+        }
 
         const claims =  jwtDecode(data.token);
         const newAuth = {token: data.token, user: { ...data.user, ...claims}}
@@ -27,21 +37,31 @@ export function AuthProvider({ children }){
     };
 
     const register = async (email, password) => {
-    const res = await fetch("http://localhost:5000/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    if (!res.ok) throw new Error("Registration failed");
-    const data = await res.json();
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+    
+      let data = null;
+      try {
+        data = await res.json();
+      } catch {
+        data = null;
+      }
 
-    const claims = jwtDecode(data.token);
-    const newAuth = { token: data.token, user: { ...data.user, ...claims } };
+      if (!res.ok) {
+        const msg = data?.error || "Registration failed";
+        throw new Error(msg);
+      }
 
-    setAuth(newAuth);
-    localStorage.setItem("auth", JSON.stringify(newAuth));
-    return newAuth.user;
-  };
+      const claims = jwtDecode(data.token);
+      const newAuth = { token: data.token, user: { ...data.user, ...claims } };
+
+      setAuth(newAuth);
+      localStorage.setItem("auth", JSON.stringify(newAuth));
+      return newAuth.user;
+    };
 
     const logout = () => {
         setAuth({ token: null, user:null });
