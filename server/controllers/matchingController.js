@@ -31,11 +31,11 @@ exports.getMatchedEvents = (req, res) => {
   }
 
   const events = getEvents();
-
+  
   // logiv to match event based on skill and then availability
   const matchedEvents = events.filter(event => {
     const hasSkill = event.requiredSkills.some(skill => volunteer.skills.includes(skill));
-    const isAvailable = volunteer.availability.includes(event.date);
+    const isAvailable = volunteer.availability.includes(event.eventDate);
     return hasSkill && isAvailable;
   });
 

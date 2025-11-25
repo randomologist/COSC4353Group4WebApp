@@ -39,7 +39,7 @@ function EventManagement() {
   const [errors, setErrors] = useState({});
 
   // Skill and Urgency Options
-  const skillsOptions = ["Teaching / Tutoring", "Event Setup / Breakdown", "Cooking / Food Preparation", "Serving Food / Hospitality", "First Aid / CPR", "Childcare", "Elderly Care", "Driving / Transportation", "Fundraising", "Public Speaking", "Marketing / Outreach", "Social Media Management", "Administrative Support", "IT Support / Tech Help", "Language Translation", "Photography / Videography", "Music / Entertainment", "Gardening / Landscaping", "Cleaning / Sanitation", "Customer Service"];
+  const skillsOptions = ["Teaching / Tutoring", "Communication", "Organization", "Event Setup / Breakdown", "Cooking / Food Preparation", "Serving Food / Hospitality", "First Aid / CPR", "Childcare", "Elderly Care", "Driving / Transportation", "Fundraising", "Public Speaking", "Marketing / Outreach", "Social Media Management", "Administrative Support", "IT Support / Tech Help", "Language Translation", "Photography / Videography", "Music / Entertainment", "Gardening / Landscaping", "Cleaning / Sanitation", "Customer Service"];
   const urgencyOptions = ["Low", "Medium", "High"];
 
   const handleChange = (e) => {
