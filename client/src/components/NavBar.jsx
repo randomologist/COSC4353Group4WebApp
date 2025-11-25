@@ -31,6 +31,9 @@ function NavBar() {
         <NavLink to="/VolunteerHistory" className={({ isActive }) => (isActive ? 'active' : '')}>
           Volunteer History
         </NavLink>
+        <NavLink to="/reports" className={({ isActive }) => (isActive ? 'active' : '')}>
+          Reports
+        </NavLink>
       </div>
       <div className="navbar-right">
         <NotifToggle />

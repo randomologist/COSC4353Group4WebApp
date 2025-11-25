@@ -7,6 +7,7 @@ import VolunteerMatching from './components/VolunteerMatching'
 import AuthPage from './pages/AuthPage';
 import VolunteerHistory from './pages/VolunteerHistory';
 import { AuthProvider } from './auth/AuthProvider';
+import ReportsPage from "./pages/ReportsPage";
 
 function App(){
   return (
@@ -22,6 +23,7 @@ function App(){
             <Route path="/VolunteerMatching" element={<VolunteerMatching />} />
             <Route path="/VolunteerHistory" element={<VolunteerHistory />} />
             <Route path="/auth" element={<AuthPage />} />
+            <Route path="/reports" element={<ReportsPage />} />
           </Routes>
         </div>
       </BrowserRouter>

@@ -4,6 +4,11 @@ const cors = require("cors");
 const db = require("./db.js"); // database import
 const PORT = 5000;
 
+const corsOptions = {
+  origin: "http://localhost:5173", // Vite dev URL
+  credentials: true,              // allow cookies / Authorization headers
+};
+
 app.use(cors());
 app.use(express.json());
 
@@ -12,12 +17,14 @@ const eventRoutes = require("./routes/events");
 const matchingRoutes = require("./routes/matching");
 const authRoutes = require("./routes/auth");
 const notifRoutes = require("./routes/notifs")
+const reportRoutes = require("./routes/reports");
 
 app.use("/api/userProfile", userProfileRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/matching", matchingRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/notifs",notifRoutes);
+app.use("/api/reports", reportRoutes);
 
 if (process.env.NODE_ENV === "test") { // for test node_env auto == test
   module.exports = app;
