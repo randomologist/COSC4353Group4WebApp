@@ -1,7 +1,30 @@
 import React, { useState } from "react";
+import { useAuth } from "../auth/AuthProvider";
 import "./EventManagement.css";
 
+const API_BASE = "http://localhost:5000/api"
+
+async function handleCreateEvent(event, token) {
+  const res = await fetch(`${API_BASE}/events`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,  
+    },
+    body: JSON.stringify(event)
+  });
+
+  if (res.status === 401) {
+    throw new Error("unauthorized");
+  }
+  if (!res.ok) {
+    throw new Error(`Server responded with ${res.status}`);
+  }
+  return await res.json();
+}
+
 function EventManagement() {
+  const { token, user } = useAuth();
   const [formData, setFormData] = useState({
     eventName: "",
     description: "",
@@ -43,7 +66,7 @@ function EventManagement() {
   };
 
   // Confirming submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
@@ -55,18 +78,25 @@ function EventManagement() {
         startTime: formData.startTime || "00:00",
         endTime: formData.endTime || "23:59"
       };
-      console.log("Event Created:", formData);
-      alert("Event created successfully!");
-      setFormData({
-        eventName: "",
-        description: "",
-        location: "",
-        requiredSkills: [],
-        urgency: "",
-        eventDate: "",
-        startTime: "",
-        endTime: ""
-      });
+      console.log("Event Created:", normalizedEvent);
+      try {
+        const result = await handleCreateEvent(normalizedEvent, token);
+        alert("Event created successfully!");
+        console.log("Event data sent:", result);
+        setFormData({
+          eventName: "",
+          description: "",
+          location: "",
+          requiredSkills: [],
+          urgency: "",
+          eventDate: "",
+          startTime: "",
+          endTime: ""
+        });
+      } catch (error) {
+        console.error("Error creating event:", error);
+        alert("Event creation failed")
+      } 
     }
   };
 

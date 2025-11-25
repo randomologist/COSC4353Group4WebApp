@@ -20,7 +20,9 @@ function VolunteerMatching() {
       .then(data => setEvents(data))
       .catch(err => console.error("Error loading events:", err));
   }, []);
-
+  useEffect(() => {
+    console.log(events)
+  }, [events]);
   const handleMatch = async () => {
     if (!selectedVolunteer) {
       alert("Please select a volunteer first.");
