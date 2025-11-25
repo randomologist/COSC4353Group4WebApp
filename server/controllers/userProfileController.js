@@ -117,10 +117,14 @@ exports.createUserProfile = (req, res) => {
 // Get user profile by ID
 exports.getUserProfile = (req, res) => {
   const { userId } = req.params;
-  const {id, role} = req.user;
   if (!userId) return res.status(400).json({ message: "User ID is required" });
-  if (role !== "admin" && userId !== id) {
-    return res.status(403).json({ error: "Forbidden" });
+
+  // If request includes an authenticated user, enforce access rules; otherwise allow public lookup
+  if (req.user) {
+    const { id, role } = req.user;
+    if (role !== "admin" && userId !== id) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
   }
 
   if (isTestMode) {

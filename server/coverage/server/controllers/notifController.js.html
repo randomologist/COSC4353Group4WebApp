@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.93% </span>
+                <span class="strong">88.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>31/33</span>
+                <span class='fraction'>30/34</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.61% </span>
+                <span class="strong">86.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>11/13</span>
+                <span class='fraction'>13/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.93% </span>
+                <span class="strong">88.23% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>31/33</span>
+                <span class='fraction'>30/34</span>
             </div>
         
             
@@ -95,50 +95,52 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { getNotifs as getNotifArray } from "../data/notifData.js";
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const { getNotifs: getNotifArray } = require("../data/notifData.js");
 &nbsp;
-export function getNotifs(req, res) {
+function getNotifs(req, res) {
   try {
     const all = getNotifArray(); // &lt;-- fetch the in-memory array
     const limitNum = Math.max(1, parseInt(req.query.limit, 10) || 5);
 &nbsp;
-    // cursor is the id of the <span class="branch-0 cbranch-no" title="branch not covered" >last item from previous page</span>
+    // cursor is the id of the last item from previous page
     const cursorVal = req.query.cursor ? parseInt(req.query.cursor, 10) : null;
-    if (Number.isNaN(cursorVal)) {
-      return res.status(200).json({ items: [], hasMore: false, next: null });
-    }
+    if (Number.isNaN(cursorVal)) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(200).json({ items: [], hasMore: false, next: null });</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
     const startIndex = cursorVal
       ? all.findIndex(n =&gt; n.id === cursorVal) + 1
@@ -151,22 +153,23 @@ export function getNotifs(req, res) {
 &nbsp;
     const items = all.slice(startIndex, startIndex + limitNum);
     const nextIndex = startIndex + items.length;
-    const <span class="branch-0 cbranch-no" title="branch not covered" >hasMore = nextIndex &lt; all.length;</span>
-<span class="cstat-no" title="statement not covered" >    const next = hasMore ? all[nextIndex - 1].id : null;</span>
-<span class="cstat-no" title="statement not covered" ></span>
+    const hasMore = nextIndex &lt; all.length;
+    const next = hasMore ? all[nextIndex - 1].id : null;
+&nbsp;
     res.status(200).json({ items, hasMore, next });
-  } catch (e) {
-    console.error("notif list error:", e);
-    res.status(500).json({ error: "Internal error" });
+<span class="branch-0 cbranch-no" title="branch not covered" >  } catch (e) {</span>
+<span class="cstat-no" title="statement not covered" >    console.error("notif list error:", e);</span>
+<span class="cstat-no" title="statement not covered" >    res.status(500).json({ error: "Internal error" });</span>
   }
-}</pre></td></tr></table></pre>
+}
+module.exports = { getNotifs };</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-01T04:11:32.460Z
+                at 2025-11-25T23:35:20.104Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

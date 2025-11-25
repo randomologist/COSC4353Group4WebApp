@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/22</span>
+                <span class='fraction'>28/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/22</span>
+                <span class='fraction'>28/28</span>
             </div>
         
             
@@ -181,7 +181,19 @@
 <a name='L116'></a><a href='#L116'>116</a>
 <a name='L117'></a><a href='#L117'>117</a>
 <a name='L118'></a><a href='#L118'>118</a>
-<a name='L119'></a><a href='#L119'>119</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -195,18 +207,20 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -305,7 +319,12 @@ const cors = require("cors");
 const db = require("./db.js"); // database import
 const PORT = 5000;
 &nbsp;
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:5173", // Vite dev URL
+  credentials: true,              // allow cookies / Authorization headers
+};
+&nbsp;
+app.use(cors(corsOptions));
 app.use(express.json());
 &nbsp;
 const userProfileRoutes = require("./routes/userProfile");
@@ -313,18 +332,20 @@ const eventRoutes = require("./routes/events");
 const matchingRoutes = require("./routes/matching");
 const authRoutes = require("./routes/auth");
 const notifRoutes = require("./routes/notifs")
+const reportRoutes = require("./routes/reports");
 &nbsp;
 app.use("/api/userProfile", userProfileRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/matching", matchingRoutes);
-app.<span class="branch-0 cbranch-no" title="branch not covered" >use("/api/auth", authRoutes);</span>
-<span class="cstat-no" title="statement not covered" >app.use("/api/notifs",notifRoutes);</span>
+app.use("/api/auth", authRoutes);
+app.use("/api/notifs",notifRoutes);
+app.use("/api/reports", reportRoutes);
 &nbsp;
 if (process.env.NODE_ENV === "test") { // for test node_env auto == test
   module.exports = app;
-<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >} else {</span></span>
-<span class="cstat-no" title="statement not covered" >  app.listen(PORT, () =&gt; console.log("Server running"));</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+} else {
+  app.listen(PORT, () =&gt; console.log("Server running"));
+}
 &nbsp;
 /*
 // valdiations for new user
@@ -424,7 +445,7 @@ app.listen(PORT, () =&gt; console.log(`Server running on port ${PORT}`)); */</pr
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-01T04:11:32.460Z
+                at 2025-11-25T23:35:20.104Z
             </div>
         <script src="../prettify.js"></script>
         <script>
