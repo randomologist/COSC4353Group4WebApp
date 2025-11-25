@@ -18,7 +18,8 @@ db.serialize(() => {
     CREATE TABLE IF NOT EXISTS UserCredentials (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       email TEXT UNIQUE NOT NULL,
-      password TEXT NOT NULL)`
+      password TEXT NOT NULL,
+      role TEXT)`
   );
 
   db.run(`
@@ -84,6 +85,33 @@ db.serialize(() => {
     if (!columns.includes("endTime")) {
       db.run(`ALTER TABLE EventDetails ADD COLUMN endTime TEXT;`);
       console.log("Added endTime column to EventDetails");
+    }
+  });
+  // Ensure UserCredentials schema has a 'role' column
+  db.all(`PRAGMA table_info(UserCredentials);`, (err, rows) => {
+    if (err) {
+      console.error("Error checking UserCredentials schema:", err.message);
+      return;
+    }
+
+    const columns = rows.map(r => r.name);
+
+    if (!columns.includes("role")) {
+      db.run(`ALTER TABLE UserCredentials ADD COLUMN role TEXT;`, err => {
+        if (err) {
+          console.error("Failed to add role column:", err.message);
+        } else {
+          console.log("Added role column to UserCredentials");
+          // Optional: backfill legacy rows with a default role
+          db.run(`UPDATE UserCredentials SET role = 'user' WHERE role IS NULL;`, err2 => {
+            if (err2) {
+              console.error("Failed to backfill role:", err2.message);
+            } else {
+              console.log("Backfilled role column with default 'user'");
+            }
+          });
+        }
+      });
     }
   });
 })
