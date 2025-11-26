@@ -15,7 +15,7 @@ async function register(req, res) {
     const user = await repo.create({ email, passwordHash, role });
 
     const token = sign({ id: user.id, email: user.email, role: user.role });
-    res.status(201).json({ user: { id: user.id, email: user.email, name: name || '', role: user.role }, token });
+    res.status(201).json({ user: { id: user.id, email: user.email, name: name || '', role: "user" }, token });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Registration failed' });
