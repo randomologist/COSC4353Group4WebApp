@@ -31,7 +31,7 @@ function NavBar() {
             </NavLink>
           </div>)
         }
-        {user &&
+        {user?.role =="admin" &&
         (<div className = "admin-nav">
             <NavLink to="/VolunteerMatching" className={({ isActive }) => (isActive ? 'active' : '')}>
               Volunteer Matching
@@ -46,7 +46,7 @@ function NavBar() {
         }
         </div>
       <div className="navbar-right">
-        <NotifToggle />
+        {user&& (<NotifToggle />)}
         {user?
           (<button className = "acc-ctrl-btn" onClick = {handleLogout}>Log Out</button>)
           :
