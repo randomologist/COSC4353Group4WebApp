@@ -109,8 +109,8 @@ db.serialize(() => {
   db.run(`UPDATE UserCredentials SET role = 'user' WHERE role IS NULL;`, err2 => {
     if (err2) {
       console.error("Failed to backfill role:", err2.message);
-    } else {
-      console.log("Backfilled NULL roles with default 'user'");
+    } else if(this.changes > 0) {
+      console.log(`Backfilled ${this.changes} NULL roles with default 'user'`);
     }
   });
   //admin seeding
