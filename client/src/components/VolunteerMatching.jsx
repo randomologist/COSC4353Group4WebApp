@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useAuth } from "../auth/AuthProvider";
 import "./VolunteerMatching.css"
 
 function VolunteerMatching() {
@@ -7,15 +8,26 @@ function VolunteerMatching() {
   const [selectedVolunteer, setSelectedVolunteer] = useState("");
   const [matchedEvents, setMatchedEvents] = useState([]);
   const [hasMatched, setHasMatched] = useState(false);
-
+  const { token, user } = useAuth();
+  
   // loading volunteers and events 
   useEffect(() => {
-    fetch("http://localhost:5000/api/matching/volunteers")
+    fetch("http://localhost:5000/api/matching/volunteers", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        })
       .then(res => res.json())
       .then(data => setVolunteers(data))
       .catch(err => console.error("Error loading volunteers:", err));
 
-    fetch("http://localhost:5000/api/events")
+    fetch("http://localhost:5000/api/events", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        })
       .then(res => res.json())
       .then(data => setEvents(data))
       .catch(err => console.error("Error loading events:", err));
@@ -30,7 +42,12 @@ function VolunteerMatching() {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/matching/matches/${selectedVolunteer}`);
+      const res = await fetch(`http://localhost:5000/api/matching/matches/${selectedVolunteer}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        });
       const matches = await res.json();
       setMatchedEvents(matches);
       setHasMatched(true);

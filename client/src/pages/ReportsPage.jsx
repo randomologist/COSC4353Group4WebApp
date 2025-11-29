@@ -30,7 +30,7 @@ function ReportsPage() {
         const res = await fetch(`${API_BASE}${endpoint}?format=json`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${token}`,   // ⬅️ send JWT
+            Authorization: `Bearer ${token}`, 
           },
         });
 
