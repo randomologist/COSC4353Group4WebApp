@@ -242,8 +242,35 @@ exports.updateUserProfile = (req, res) => {
   });
 };
 
+const fetchUserProfilesFromDb = () => {
+  return new Promise((resolve, reject) => {
+    db.all(`SELECT * FROM UserProfile`, (err, rows) => {
+      if (err) return reject(err);
+      if (!rows || rows.length === 0) return resolve(null);
+
+      const profiles = rows.map(row => ({
+        ...row,
+        zipCode: row.zip,
+        skills: JSON.parse(row.skills || '[]'),
+        availability: JSON.parse(row.availability || '[]')
+      }));
+      resolve(profiles);
+    });
+  });
+};
+
 // Helpers for testing
-exports.getUserProfiles = () => userProfiles;
+exports.getUserProfiles = async(mock = false) => {
+  if(mock) {
+    return userProfiles;
+  }
+  try{
+    const profiles = await fetchUserProfilesFromDb();
+    return profiles || [];    
+  } catch(error) {
+    console.error("DB error, failed to fetch profiles", error)
+  }
+};
 exports.resetUserProfiles = (data) => { userProfiles = data; };
 
 /*

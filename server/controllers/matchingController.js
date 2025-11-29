@@ -2,9 +2,11 @@ const { getEvents } = require("../data/eventData.js");
 const { getUserProfiles } = require("../controllers/userProfileController.js");
 const { getAssignments, addAssignment } = require("../data/matchingData.js");
 
+const fromBackend = false//not db on true
 // get volunteers
-exports.getAllVolunteers = (req, res) => {
-  const profiles = getUserProfiles();
+exports.getAllVolunteers = async (req, res) => {
+  const profiles = await getUserProfiles(fromBackend);
+  
   const volunteers = profiles.map(p => ({
     id: p.id,
     name: p.fullName,
@@ -14,16 +16,15 @@ exports.getAllVolunteers = (req, res) => {
   }));
   res.json(volunteers);
 };
-
 // Get matched events for a volunteer
-exports.getMatchedEvents = (req, res) => {
+exports.getMatchedEvents = async (req, res) => {
   const { volunteerId } = req.params;
 
   if (!volunteerId) {
     return res.status(400).json({ message: "Volunteer ID required" });
   }
 
-  const profiles = getUserProfiles();
+  const profiles = await getUserProfiles(fromBackend);
   const volunteer = profiles.find(p => p.id === parseInt(volunteerId));
 
   if (!volunteer) {
@@ -43,14 +44,14 @@ exports.getMatchedEvents = (req, res) => {
 };
 
 // Assign a volunteer to an event
-exports.assignVolunteerToEvent = (req, res) => {
+exports.assignVolunteerToEvent = async (req, res) => {
   const { volunteerId, eventId } = req.body;
 
   if (!volunteerId || !eventId) {
     return res.status(400).json({ message: "Volunteer ID and Event ID required" });
   }
 
-  const profiles = getUserProfiles();
+  const profiles = await getUserProfiles(fromBackend);
   const volunteer = profiles.find(p => p.id === parseInt(volunteerId));
 
   if (!volunteer) {
