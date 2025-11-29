@@ -1,6 +1,7 @@
 const { verify } = require('../utils/jwtUtil');
 
 function authMiddleware (req, res, next) {
+  //console.log("auth check");
   const header = req.headers.authorization || '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : null;
   if (!token) return res.status(401).json({ error: 'Missing token' });
