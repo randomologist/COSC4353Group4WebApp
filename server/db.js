@@ -102,14 +102,6 @@ db.serialize(() => {
           console.error("Failed to add role column:", err.message);
         } else {
           console.log("Added role column to UserCredentials");
-          // Optional: backfill legacy rows with a default role
-          db.run(`UPDATE UserCredentials SET role = 'user' WHERE role IS NULL;`, err2 => {
-            if (err2) {
-              console.error("Failed to backfill role:", err2.message);
-            } else {
-              console.log("Backfilled role column with default 'user'");
-            }
-          });
         }
       });
     }
@@ -120,6 +112,22 @@ db.serialize(() => {
     } else {
       console.log("Backfilled NULL roles with default 'user'");
     }
+  });
+  //admin seeding
+  db.get(
+    "SELECT * FROM UserCredentials WHERE role = 'admin' LIMIT 1", (err,row) => {
+      if(err){console.error("Error checking for admin:", err); return;}
+      if(!row){
+        console.log("Initial admin account doesn't exist, Seeding admin...");
+        db.run(
+          "INSERT UserCredentials (email,password,role) VALUES ('admin@volunteersite','$2a$12$fMKGXp.UuPIYs543oFkTgOiihUkiZ4lKapq54Vnx4mMAQckp6QjMS','admin')",
+          function(err){
+            if(err){console.error("Admin seeding failed:", err); return;}
+            console.log("Admin account seeded; email:admin@volunteersite, pass:adminp@ss");
+          }
+        )
+      }
+      else{console.log("Admin account exists")}
   });
 })
 module.exports = db;
