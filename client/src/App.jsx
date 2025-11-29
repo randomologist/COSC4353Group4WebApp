@@ -9,6 +9,7 @@ import VolunteerHistory from './pages/VolunteerHistory';
 import { AuthProvider } from './auth/AuthProvider';
 import ReportsPage from "./pages/ReportsPage";
 import EditEvent from './pages/EditEvent.jsx';
+import Protection from './auth/Protection.jsx';
 
 function App(){
   return (
@@ -19,13 +20,15 @@ function App(){
           <Routes>
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/UserProfilePage" element={<UserProfile />} />
-            <Route path="/EventManagement" element={<EventManagement />} />
-            <Route path="/VolunteerMatching" element={<VolunteerMatching />} />
-            <Route path="/VolunteerHistory" element={<VolunteerHistory />} />
             <Route path="/auth" element={<AuthPage />} />
-            <Route path="/reports" element={<ReportsPage />} />
-            <Route path="/edit-event" element={<EditEvent />} />
+            <Route path="/VolunteerHistory" element={<VolunteerHistory />} />
+            <Route path="/UserProfilePage" element={<UserProfile />} />
+            <Route element = {<Protection role = "admin"/>}>
+              <Route path="/EventManagement" element={<EventManagement />} />
+              <Route path="/VolunteerMatching" element={<VolunteerMatching />} />
+              <Route path="/reports" element={<ReportsPage />} />
+              <Route path="/edit-event" element={<EditEvent />} />
+            </Route>
           </Routes>
         </div>
       </BrowserRouter>
