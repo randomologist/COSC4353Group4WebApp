@@ -25,7 +25,7 @@ const db={
 }
 
 //choose which you use
-const active = mock;
+const active = db;
 //exports
 export const getEvents = active.getEvents;
 export const resetEvents = active.resetEvents;

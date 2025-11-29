@@ -2,7 +2,7 @@ const { getEvents } = require("../data/eventData.js");
 const { getUserProfiles } = require("../controllers/userProfileController.js");
 const { getAssignments, addAssignment } = require("../data/matchingData.js");
 
-const fromBackend = true; //not db on true
+const fromBackend = false; //not db on true
 // get volunteers
 exports.getAllVolunteers = async (req, res) => {
   const profiles = await getUserProfiles(fromBackend);
@@ -19,7 +19,7 @@ exports.getAllVolunteers = async (req, res) => {
 // Get matched events for a volunteer
 exports.getMatchedEvents = async (req, res) => {
   const { volunteerId } = req.params;
-
+  console.log("Finding maching in backend")
   if (!volunteerId) {
     return res.status(400).json({ message: "Volunteer ID required" });
   }
@@ -36,8 +36,8 @@ exports.getMatchedEvents = async (req, res) => {
   // logiv to match event based on skill and then availability
   const matchedEvents = events.filter(event => {
     const hasSkill = event.requiredSkills.some(skill => volunteer.skills.includes(skill));
-    const isAvailable = volunteer.availability.includes(event.eventDate);
-    return hasSkill && isAvailable;
+    //const isAvailable = volunteer.availability.includes(event.eventDate);
+    return hasSkill //&& isAvailable;
   });
 
   res.json(matchedEvents);
@@ -46,7 +46,6 @@ exports.getMatchedEvents = async (req, res) => {
 // Assign a volunteer to an event
 exports.assignVolunteerToEvent = async (req, res) => {
   const { volunteerId, eventId } = req.body;
-
   if (!volunteerId || !eventId) {
     return res.status(400).json({ message: "Volunteer ID and Event ID required" });
   }
@@ -86,7 +85,7 @@ exports.assignVolunteerToEvent = async (req, res) => {
   };
 
   // Save assignment
-  addAssignment(assignment);
+  await addAssignment(assignment);
   res.status(201).json(assignment);
 };
 
