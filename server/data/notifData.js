@@ -42,7 +42,14 @@ let data = [
             read:true
         },
     ];
-exports.getNotifs = () => data;
-exports.resetNotifs = (newdata) => { data = newdata; };
-exports.addNotifs = (notif) => data.push(notif);
-//module.exports = data;
+const mock = {
+    getNotifs: () => data,
+    resetNotifs: (newdata) => { data = newdata;},
+    addNotifs: (notif) => data.push(notif)
+}
+
+const active = mock;
+//exports
+export const getEvents = active.getEvents;
+export const resetEvents = active.resetEvents;
+export const addEvent = active.addEvent;

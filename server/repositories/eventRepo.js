@@ -37,11 +37,11 @@ function addEvent(event){
 };
 
 let events = []; 
-function getEvents() {
+function getBEvents() {
   return events;
 }
 
-function addEvent(event) {
+function addBEvent(event) {
   events.push(event);
 }
 
