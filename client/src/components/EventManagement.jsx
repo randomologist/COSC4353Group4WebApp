@@ -198,6 +198,24 @@ function EventManagement() {
       </form>
     </div>
   );
+
+  async function handleDelete(id) {
+  const confirmDelete = window.confirm("Are you sure you want to delete this event?");
+  if (!confirmDelete) return;
+
+  const response = await fetch(`/events/${id}`, {
+    method: "DELETE",
+  });
+
+  if (response.ok) {
+    alert("Event deleted");
+    navigate("/events"); // or wherever your list page is
+  } else {
+    alert("Failed to delete event");
+  }
+  }
+
+  
 }
 
 export default EventManagement;

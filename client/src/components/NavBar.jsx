@@ -39,6 +39,9 @@ function NavBar() {
             <NavLink to="/EventManagement" className={({ isActive }) => (isActive ? 'active' : '')}>
               Event Management
             </NavLink>
+            <NavLink to="/edit-event" className={({ isActive }) => (isActive ? 'active' : '')}>
+              Edit Event
+            </NavLink>
             <NavLink to="/reports" className={({ isActive }) => (isActive ? 'active' : '')}>
               Reports
             </NavLink>

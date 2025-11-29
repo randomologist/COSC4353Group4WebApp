@@ -8,6 +8,7 @@ import AuthPage from './pages/AuthPage';
 import VolunteerHistory from './pages/VolunteerHistory';
 import { AuthProvider } from './auth/AuthProvider';
 import ReportsPage from "./pages/ReportsPage";
+import EditEvent from './pages/EditEvent.jsx';
 
 function App(){
   return (
@@ -24,12 +25,14 @@ function App(){
             <Route path="/VolunteerHistory" element={<VolunteerHistory />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/edit-event" element={<EditEvent />} />
           </Routes>
         </div>
       </BrowserRouter>
     </AuthProvider>
   )
 }
+
 
 export default App
 

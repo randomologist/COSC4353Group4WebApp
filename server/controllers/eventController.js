@@ -1,4 +1,10 @@
-const { getEvents, addEvent } = require("../repositories/eventRepo.js");
+const {
+  getEvents,
+  addEvent,
+  getEventById,
+  updateEvent,
+  deleteEvent,
+} = require("../repositories/eventRepo.js");
 
 const getAllEvents = (req, res) => {
   res.json(getEvents());
@@ -37,4 +43,43 @@ const createEvent = (req, res) => {
   return res.status(201).json(newEvent);
 };
 
-module.exports = { getAllEvents, createEvent}
+const getEvent = (req, res) => {
+  const id = parseInt(req.params.id);
+  const event = getEventById(id);
+
+  if (!event) {
+    return res.status(404).json({ message: "Event not found" });
+  }
+
+  res.json(event);
+};
+
+const updateEventById = (req, res) => {
+  const id = parseInt(req.params.id);
+  const updated = updateEvent(id, req.body);
+
+  if (!updated) {
+    return res.status(404).json({ message: "Event not found" });
+  }
+
+  res.json(updated);
+};
+
+const deleteEventById = (req, res) => {
+  const id = parseInt(req.params.id);
+  const deleted = deleteEvent(id);
+
+  if (!deleted) {
+    return res.status(404).json({ message: "Event not found" });
+  }
+
+  res.json({ message: "Event deleted successfully" });
+};
+
+module.exports = {
+  getAllEvents,
+  createEvent,
+  getEvent,
+  updateEventById,
+  deleteEventById,
+};

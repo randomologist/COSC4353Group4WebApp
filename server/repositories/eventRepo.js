@@ -36,4 +36,25 @@ function addEvent(event){
   })
 };
 
-module.exports = {getEvents, addEvent};
+let events = []; 
+function getEvents() {
+  return events;
+}
+
+function addEvent(event) {
+  events.push(event);
+}
+
+function getEventById(id) {
+  return events.find(ev => ev.id === id);
+}
+
+function updateEvent(id, updatedFields) {
+  const index = events.findIndex(ev => ev.id === id);
+  if (index === -1) return null;
+
+  events[index] = { ...events[index], ...updatedFields };
+  return events[index];
+}
+
+module.exports = {getEvents, addEvent, getEventById, updateEvent};

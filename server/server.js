@@ -32,6 +32,8 @@ if (process.env.NODE_ENV === "test") { // for test node_env auto == test
   app.listen(PORT, () => console.log("Server running"));
 }
 
+
+
 /*
 // valdiations for new user
 app.post("/api/users", (req, res) => {
