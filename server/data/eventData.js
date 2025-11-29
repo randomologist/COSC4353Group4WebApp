@@ -1,3 +1,4 @@
+import {getEvents as dbGetEvents, addEvent as dbAddEvent, getEventById, updateEvent} from "../repositories/eventRepo.js"
 let events = [
   {
     // mock event data
@@ -13,11 +14,15 @@ let events = [
   }
 ];
 const mock = {
-  getEvents: () => events,
-  resetEvents: (data) => { events = data; },
-  addEvent: (event) => events.push(event)
+  getEvents: async() => events,
+  resetEvents: async(data) => { events = data; return events},
+  addEvent: async(event) => events.push(event)
 };
-
+const db={
+  getEvents: dbGetEvents,
+  resetEvents: async(data) => { events = data; return events},
+  addEvent: dbAddEvent
+}
 
 //choose which you use
 const active = mock;

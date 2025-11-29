@@ -4,13 +4,14 @@ const {
   getEventById,
   updateEvent,
   deleteEvent,
-} = require("../repositories/eventRepo.js");
+} = require("../data/eventData.js");
 
-const getAllEvents = (req, res) => {
-  res.json(getEvents());
+const getAllEvents = async (req, res) => {
+  const events = await getEvents();
+  res.json(events);
 };
 
-const createEvent = (req, res) => {
+const createEvent = async(req, res) => {
   const {
     eventName,
     location,
@@ -26,7 +27,7 @@ const createEvent = (req, res) => {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
-  const events = getEvents();
+  const events = await getEvents();
   const newEvent = {
     id: events.length + 1,
     eventName,
@@ -39,13 +40,13 @@ const createEvent = (req, res) => {
     description,
   };
 
-  addEvent(newEvent);
-  return res.status(201).json(newEvent);
+  const saved = await addEvent(newEvent);
+  return res.status(201).json(saved);
 };
 
-const getEvent = (req, res) => {
+const getEvent = async(req, res) => {
   const id = parseInt(req.params.id);
-  const event = getEventById(id);
+  const event = await getEventById(id);
 
   if (!event) {
     return res.status(404).json({ message: "Event not found" });
@@ -54,9 +55,9 @@ const getEvent = (req, res) => {
   res.json(event);
 };
 
-const updateEventById = (req, res) => {
+const updateEventById = async(req, res) => {
   const id = parseInt(req.params.id);
-  const updated = updateEvent(id, req.body);
+  const updated = await updateEvent(id, req.body);
 
   if (!updated) {
     return res.status(404).json({ message: "Event not found" });
@@ -65,9 +66,9 @@ const updateEventById = (req, res) => {
   res.json(updated);
 };
 
-const deleteEventById = (req, res) => {
+const deleteEventById = async(req, res) => {
   const id = parseInt(req.params.id);
-  const deleted = deleteEvent(id);
+  const deleted = await deleteEvent(id);
 
   if (!deleted) {
     return res.status(404).json({ message: "Event not found" });

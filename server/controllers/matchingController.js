@@ -2,7 +2,7 @@ const { getEvents } = require("../data/eventData.js");
 const { getUserProfiles } = require("../controllers/userProfileController.js");
 const { getAssignments, addAssignment } = require("../data/matchingData.js");
 
-const fromBackend = false//not db on true
+const fromBackend = true; //not db on true
 // get volunteers
 exports.getAllVolunteers = async (req, res) => {
   const profiles = await getUserProfiles(fromBackend);
@@ -31,7 +31,7 @@ exports.getMatchedEvents = async (req, res) => {
     return res.status(404).json({ message: "Volunteer not found" });
   }
 
-  const events = getEvents();
+  const events = await getEvents();
   
   // logiv to match event based on skill and then availability
   const matchedEvents = events.filter(event => {
@@ -58,7 +58,7 @@ exports.assignVolunteerToEvent = async (req, res) => {
     return res.status(404).json({ message: "Volunteer not found" });
   }
 
-  const events = getEvents();
+  const events = await getEvents();
   const event = events.find(e => e.id === parseInt(eventId));
 
   if (!event) {
@@ -66,7 +66,7 @@ exports.assignVolunteerToEvent = async (req, res) => {
   }
 
   // Check if already assigned
-  const assignments = getAssignments();
+  const assignments = await getAssignments();
   const alreadyAssigned = assignments.some(
     a => a.volunteerId === parseInt(volunteerId) && a.eventId === parseInt(eventId)
   );
