@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Navigate } from 'react-router-dom'
 import { useAuth } from "../auth/AuthProvider"
 import './AuthPage.css'
 
 function AuthPage(){
+    const { token } = useAuth();
+     if(token){
+        return <Navigate to="/home" replace />;
+    }
     const [mode, setMode] = useState(() => {
         const hash = window.location.hash.replace('#', '');
         return hash === "sign-up" ? "sign-up" : "login";
